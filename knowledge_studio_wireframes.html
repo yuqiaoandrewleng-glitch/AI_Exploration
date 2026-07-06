@@ -1,0 +1,2740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Studio — Wireframes</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',sans-serif; background:#f5f6f8; color:#2c2e3a; font-size:14px; }
+
+  /* TOP BAR */
+  .topbar { background:#fff; padding:0 24px; height:56px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #e5e7eb; position:sticky; top:0; z-index:100; }
+  .topbar-left { display:flex; align-items:center; gap:12px; }
+  .hsbc-logo { width:32px; height:32px; display:flex; align-items:center; justify-content:center; }
+  .hsbc-logo svg { width:28px; height:28px; }
+  .brand-text { font-size:15px; font-weight:600; color:#1f2129; }
+  .pill-red { background:#d7282f; color:#fff; font-size:11px; font-weight:600; padding:2px 8px; border-radius:3px; letter-spacing:.3px; }
+  .topbar-center { display:flex; align-items:center; gap:8px; font-size:13px; color:#5a5d6b; }
+  .topbar-center .divider { color:#c5c8d0; padding:0 4px; }
+  .dropdown { background:#fff; border:1px solid #d8dae0; border-radius:4px; padding:5px 28px 5px 10px; font-size:13px; color:#2c2e3a; font-family:inherit; cursor:pointer; appearance:none; background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3e%3cpath d='M2 4l3 3 3-3' stroke='%235a5d6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e"); background-repeat:no-repeat; background-position:right 8px center; }
+  .topbar-right { display:flex; align-items:center; gap:18px; }
+  .topbar-icon { width:20px; height:20px; color:#5a5d6b; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .api-toggle { background:#fff; border:1px solid #d7282f; color:#d7282f; padding:5px 12px; border-radius:4px; font-size:12px; cursor:pointer; font-weight:600; font-family:inherit; }
+  .api-toggle.on { background:#d7282f; color:#fff; }
+  .avatar { width:28px; height:28px; border-radius:50%; background:#5a5d6b; color:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; }
+
+  /* LAYOUT */
+  .container { display:flex; min-height:calc(100vh - 56px); }
+  .sidebar { width:210px; background:#fff; border-right:1px solid #e5e7eb; padding:8px 0; flex-shrink:0; overflow-y:auto; }
+  .group-label { padding:12px 16px 6px; font-size:12px; font-weight:600; color:#5a5d6b; display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; }
+  .group-label .chev { font-size:9px; color:#9ca0ad; transition:transform .15s; display:inline-block; }
+  .group-label .chev.open { transform:rotate(90deg); }
+  .nav-item { padding:6px 16px 6px 32px; font-size:13px; color:#5a5d6b; cursor:pointer; display:flex; align-items:center; gap:8px; border-left:3px solid transparent; transition:all .1s; }
+  .nav-item:hover { background:#f5f6f8; color:#1f2129; }
+  .nav-item.active { background:#eef2ff; color:#1a3eb8; border-left-color:#1a3eb8; font-weight:600; }
+  .nav-icon { width:14px; height:14px; flex-shrink:0; opacity:.7; }
+  .subgroup-label { padding:6px 16px 6px 32px; font-size:12px; font-weight:600; color:#1f2129; display:flex; align-items:center; justify-content:space-between; cursor:pointer; }
+  .subgroup-label .chev { font-size:8px; color:#9ca0ad; display:inline-block; transition:transform .15s; }
+  .subgroup-label .chev.open { transform:rotate(90deg); }
+  .divider { border-top:1px solid #e5e7eb; margin:8px 12px; }
+  .standalone { padding:8px 16px; font-size:13px; color:#5a5d6b; cursor:pointer; display:flex; align-items:center; gap:8px; }
+  .standalone:hover { color:#1f2129; }
+
+  .main { flex:1; padding:0; overflow-y:auto; max-height:calc(100vh - 56px); background:#f5f6f8; }
+  .page-head { padding:14px 28px 0; background:#fff; border-bottom:1px solid #e5e7eb; }
+  .breadcrumb { font-size:12px; color:#5a5d6b; margin-bottom:6px; display:flex; align-items:center; gap:4px; }
+  .breadcrumb a { color:#5a5d6b; text-decoration:none; cursor:pointer; }
+  .breadcrumb a:hover { color:#d7282f; }
+  .breadcrumb .sep { color:#c5c8d0; }
+  .breadcrumb .current { color:#1f2129; font-weight:500; }
+  .page-title-row { display:flex; align-items:center; justify-content:space-between; padding-bottom:12px; gap:16px; }
+  .page-title-row h1 { font-size:22px; font-weight:700; color:#1f2129; }
+  .page-head .subtitle { font-size:13px; color:#5a5d6b; margin-top:-2px; padding-bottom:12px; }
+  .page-body { padding:18px 28px; }
+  .page-body h2 { font-size:18px; font-weight:700; margin-bottom:4px; color:#1f2129; }
+  .page-body .subtitle { color:#5a5d6b; font-size:13px; margin-bottom:18px; }
+  .guidance { font-size:12px; color:#5a5d6b; text-decoration:none; }
+  .guidance:hover { color:#d7282f; }
+
+  /* TABS */
+  .tabs { display:flex; gap:0; border-bottom:1px solid #e5e7eb; margin-bottom:16px; background:#fff; padding:0 28px; }
+  .tab { padding:10px 18px; font-size:13px; font-weight:500; cursor:pointer; color:#5a5d6b; border-bottom:2px solid transparent; margin-bottom:-1px; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit; }
+  .tab.active { color:#d7282f; border-bottom-color:#d7282f; font-weight:600; }
+  .tab:hover { color:#1f2129; }
+
+  /* KNOWLEDGE STUDIO MAIN TABS (Overview / Datasets / Pipelines / APIs) */
+  .ks-tabs { display:flex; gap:24px; background:#fff; padding:0 28px; border-bottom:1px solid #e5e7eb; }
+  .ks-tab { padding:14px 4px; font-size:14px; font-weight:500; cursor:pointer; color:#5a5d6b; border-bottom:3px solid transparent; margin-bottom:-1px; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit; display:flex; align-items:center; gap:6px; }
+  .ks-tab:hover { color:#1f2129; }
+  .ks-tab.active { color:#d7282f; border-bottom-color:#d7282f; font-weight:600; }
+  .ks-tab svg { width:14px; height:14px; opacity:.8; }
+  .ks-tab .count { background:#eef0f4; color:#5a5d6b; font-size:11px; font-weight:600; padding:1px 7px; border-radius:10px; }
+  .ks-tab.active .count { background:#fef0c7; color:#997404; }
+
+  /* DATA EXPLORER (on Source Detail) */
+  .explorer-shell { background:#fff; border:1px solid #e5e7eb; border-radius:6px; overflow:hidden; }
+  .explorer-header { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1px solid #e5e7eb; background:#fafbfc; }
+  .explorer-header .left { display:flex; align-items:center; gap:12px; font-size:13px; color:#5a5d6b; }
+  .explorer-header .profile-pill { display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:600; }
+  .explorer-header .profile-pill.full { background:#fef5f6; color:#d7282f; border:1px solid #d7282f; }
+  .explorer-header .profile-pill.vector { background:#eef2ff; color:#1a3eb8; border:1px solid #1a3eb8; }
+  .explorer-header .profile-pill.graph { background:#fff3e0; color:#e65100; border:1px solid #e65100; }
+  .explorer-header .profile-pill.wiki { background:#f3e5f5; color:#a371f7; border:1px solid #a371f7; }
+  .explorer-header .dot { width:8px; height:8px; border-radius:50%; background:currentColor; }
+  .explorer-header .stats { display:flex; gap:14px; }
+  .explorer-header .stats span { font-size:12px; color:#5a5d6b; }
+  .explorer-header .stats strong { color:#1f2129; }
+  .explorer-subtabs { display:flex; gap:24px; padding:0 18px; background:#fff; border-bottom:1px solid #e5e7eb; }
+  .explorer-subtab { padding:10px 4px; font-size:13px; font-weight:500; cursor:pointer; color:#5a5d6b; border-bottom:2px solid transparent; margin-bottom:-1px; background:none; border-top:none; border-left:none; border-right:none; font-family:inherit; display:flex; align-items:center; gap:6px; }
+  .explorer-subtab:hover { color:#1f2129; }
+  .explorer-subtab.active { color:#d7282f; border-bottom-color:#d7282f; font-weight:600; }
+  .explorer-subtab svg { width:13px; height:13px; opacity:.8; }
+  .explorer-pane { display:none; padding:18px; min-height:420px; }
+  .explorer-pane.active { display:block; }
+
+  /* Graph pane (Full/Graph) */
+  .graph-pane { display:flex; gap:14px; }
+  .graph-pane .graph-main { flex:3; min-width:0; }
+  .graph-pane .graph-side { flex:1; min-width:260px; }
+  .entity-card { background:#fafbfc; border:1px solid #e5e7eb; border-radius:6px; padding:14px; font-size:12px; }
+  .entity-card .ent-name { font-size:14px; font-weight:700; color:#1f2129; }
+  .entity-card .ent-meta { color:#9ca0ad; font-size:11px; margin-top:4px; }
+  .entity-card .rel-list { margin-top:10px; line-height:1.8; }
+  .entity-card .rel-list a { color:#1a3eb8; text-decoration:none; cursor:pointer; }
+  .entity-card .rel-list a:hover { text-decoration:underline; }
+  .graph-controls { background:#fff; border:1px solid #e5e7eb; border-radius:6px; padding:12px; margin-top:12px; }
+  .graph-controls .row-line { display:flex; align-items:center; gap:8px; font-size:12px; color:#5a5d6b; margin-bottom:6px; }
+
+  /* Wiki pane (Full sub-tab + LLMwiki profile) */
+  .wiki-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; }
+  .wiki-card { background:#fff; border:1.5px solid #e5e7eb; border-radius:8px; padding:14px; cursor:pointer; transition:all .15s; }
+  .wiki-card:hover { border-color:#d7282f; transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.06); }
+  .wiki-card .wc-head { display:flex; align-items:flex-start; gap:8px; margin-bottom:8px; }
+  .wiki-card .wc-icon { width:28px; height:28px; border-radius:6px; background:#f3e5f5; color:#a371f7; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .wiki-card .wc-title { font-size:13px; font-weight:700; color:#1f2129; line-height:1.3; }
+  .wiki-card .wc-label { font-size:11px; color:#5a5d6b; margin-bottom:8px; }
+  .wiki-card .wc-topics { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px; }
+  .wiki-card .wc-topic { background:#eef2ff; color:#1a3eb8; font-size:10px; padding:2px 8px; border-radius:10px; font-weight:500; }
+  .wiki-card .wc-footer { display:flex; align-items:center; justify-content:space-between; font-size:11px; color:#9ca0ad; padding-top:8px; border-top:1px solid #eef0f4; }
+  .wiki-card .wc-chunks { color:#1d6b65; font-weight:600; }
+
+  /* File tree pane (Vector profile + Full sub-tab) */
+  .vector-pane { display:flex; gap:14px; }
+  .vector-pane .file-tree { flex:1; min-width:280px; max-width:380px; background:#fff; border:1px solid #e5e7eb; border-radius:6px; overflow:hidden; align-self:flex-start; }
+  .vector-pane .file-tree .ft-head { padding:10px 14px; background:#fafbfc; border-bottom:1px solid #e5e7eb; font-size:12px; color:#5a5d6b; font-weight:600; }
+  .vector-pane .file-tree .ft-item { display:flex; align-items:center; gap:8px; padding:7px 14px; font-size:12px; cursor:pointer; border-bottom:1px solid #eef0f4; }
+  .vector-pane .file-tree .ft-item:hover { background:#f5f6f8; }
+  .vector-pane .file-tree .ft-item.selected { background:#fef5f6; color:#d7282f; font-weight:600; }
+  .vector-pane .file-tree .ft-item.selected svg { color:#d7282f; }
+  .vector-pane .file-tree .ft-item .ft-name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .vector-pane .file-tree .ft-item .ft-meta { font-size:11px; color:#9ca0ad; }
+  .vector-pane .file-tree .ft-folder { font-weight:600; background:#fafbfc; }
+  .vector-pane .chunk-pane { flex:2; min-width:0; background:#fff; border:1px solid #e5e7eb; border-radius:6px; }
+  .vector-pane .chunk-pane .cp-head { padding:12px 16px; border-bottom:1px solid #e5e7eb; }
+  .vector-pane .chunk-pane .cp-head .cp-title { font-size:14px; font-weight:700; color:#1f2129; }
+  .vector-pane .chunk-pane .cp-head .cp-meta { font-size:11px; color:#5a5d6b; margin-top:3px; }
+  .vector-pane .chunk-pane .cp-body { padding:14px 16px; }
+  .vector-pane .chunk-card { padding:10px 12px; border:1px solid #e5e7eb; border-radius:6px; margin-bottom:8px; background:#fafbfc; }
+  .vector-pane .chunk-card .cc-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .vector-pane .chunk-card .cc-num { font-size:11px; color:#9ca0ad; font-weight:600; }
+  .vector-pane .chunk-card .cc-sim { font-size:11px; color:#1d6b65; font-weight:700; }
+  .vector-pane .chunk-card .cc-text { font-size:12px; color:#1f2129; line-height:1.5; }
+
+  /* Empty state (indexing in progress) */
+  .empty-state { text-align:center; padding:60px 20px; color:#5a5d6b; }
+  .empty-state .es-icon { font-size:36px; margin-bottom:10px; opacity:.5; }
+  .empty-state .es-title { font-size:14px; font-weight:700; color:#1f2129; margin-bottom:6px; }
+  .empty-state .es-desc { font-size:12px; color:#5a5d6b; margin-bottom:18px; }
+  .progress-bar { width:240px; height:6px; background:#eef0f4; border-radius:3px; overflow:hidden; margin:0 auto 10px; }
+  .progress-bar .progress-fill { height:100%; background:linear-gradient(90deg,#d7282f,#e67e22); border-radius:3px; }
+
+  /* SELECTION LIST (multi-select with checkboxes) */
+  .select-list { border:1px solid #e5e7eb; border-radius:6px; overflow:hidden; background:#fff; }
+  .select-list .select-toolbar { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:#fafbfc; border-bottom:1px solid #e5e7eb; font-size:12px; color:#5a5d6b; }
+  .select-list .select-toolbar .left { display:flex; align-items:center; gap:12px; }
+  .select-list .select-toolbar .search-inline { padding:5px 8px 5px 28px; border:1px solid #d8dae0; border-radius:4px; font-size:12px; width:200px; background:#fff url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239ca0ad' stroke-width='1.5'%3e%3ccircle cx='7' cy='7' r='5'/%3e%3cpath d='M11 11l3 3' stroke-linecap='round'/%3e%3c/svg%3e") no-repeat 8px center; }
+  .select-list .select-item { display:flex; align-items:center; gap:12px; padding:12px 14px; border-bottom:1px solid #eef0f4; cursor:pointer; transition:background .1s; }
+  .select-list .select-item:last-child { border-bottom:none; }
+  .select-list .select-item:hover { background:#f5f6f8; }
+  .select-list .select-item.selected { background:#fef5f6; }
+  .select-list .select-item input[type=checkbox] { width:16px; height:16px; accent-color:#d7282f; cursor:pointer; flex-shrink:0; }
+  .select-list .select-item .si-icon { width:32px; height:32px; border-radius:6px; background:#eef2ff; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:#1a3eb8; }
+  .select-list .select-item .si-icon svg { width:16px; height:16px; }
+  .select-list .select-item .si-body { flex:1; min-width:0; }
+  .select-list .select-item .si-name { font-size:13px; font-weight:600; color:#1f2129; }
+  .select-list .select-item .si-desc { font-size:11px; color:#5a5d6b; margin-top:2px; }
+  .select-list .select-item .si-meta { font-size:11px; color:#9ca0ad; flex-shrink:0; }
+
+  /* SELECTED CHIPS (shows chosen items) */
+  .selected-chips { display:flex; flex-wrap:wrap; gap:6px; padding:10px 14px; background:#fafbfc; border:1px solid #e5e7eb; border-radius:6px; min-height:42px; align-items:center; }
+  .selected-chips .chip-label { font-size:12px; color:#5a5d6b; margin-right:4px; }
+  .selected-chips .chip { display:inline-flex; align-items:center; gap:6px; padding:3px 8px 3px 10px; background:#fef5f6; border:1px solid #d7282f; color:#d7282f; border-radius:14px; font-size:12px; font-weight:500; }
+  .selected-chips .chip-x { cursor:pointer; opacity:.7; font-size:14px; line-height:1; }
+  .selected-chips .chip-x:hover { opacity:1; }
+  .selected-chips .empty { color:#9ca0ad; font-size:12px; font-style:italic; }
+
+  /* TAB SEGMENTED (for upload method toggle) */
+  .seg-tabs { display:inline-flex; border:1px solid #d8dae0; border-radius:4px; overflow:hidden; background:#fff; }
+  .seg-tabs button { padding:6px 14px; font-size:12px; font-weight:500; color:#5a5d6b; background:#fff; border:none; cursor:pointer; font-family:inherit; border-right:1px solid #d8dae0; }
+  .seg-tabs button:last-child { border-right:none; }
+  .seg-tabs button.active { background:#2c2e3a; color:#fff; }
+  .seg-tabs button:hover:not(.active) { background:#f5f6f8; }
+
+  /* STEPPER */
+  .stepper { display:flex; margin-bottom:20px; }
+  .step { padding:9px 18px; font-size:13px; font-weight:500; background:#eef0f4; color:#9ca0ad; flex:1; clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%); }
+  .step:first-child { clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%); }
+  .step.active { background:#2a8079; color:#fff; font-weight:600; }
+  .step.done { background:#d6e8e6; color:#1d6b65; }
+  .step + .step { margin-left:-12px; }
+
+  /* BOXES */
+  .box { background:#fff; border:1px solid #e5e7eb; border-radius:6px; padding:16px; margin-bottom:14px; }
+  .box.accent { border-color:#d7282f; border-width:1.5px; }
+  .box.api { border-color:#e67e22; border-style:dashed; background:#fffdf7; }
+  .box-label { font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:#9ca0ad; margin-bottom:10px; font-weight:600; }
+  .box-label.red { color:#d7282f; }
+  .box-label.orange { color:#e67e22; }
+  .section-h { font-size:14px; font-weight:700; color:#1f2129; padding-left:10px; border-left:3px solid #d7282f; margin:16px 0 10px; }
+
+  /* LAYOUT HELPERS */
+  .row { display:flex; gap:14px; flex-wrap:wrap; }
+  .col { flex:1; min-width:200px; }
+  .col-2 { flex:2; min-width:360px; }
+  .col-3 { flex:3; min-width:460px; }
+  .col-sm { flex:0 0 260px; min-width:260px; }
+  .metric-card { background:#f5f6f8; border:1px solid #e5e7eb; border-radius:6px; padding:14px; text-align:center; }
+  .metric-card .value { font-size:24px; font-weight:700; color:#1f2129; }
+  .metric-card .label { font-size:11px; color:#5a5d6b; margin-top:4px; text-transform:uppercase; letter-spacing:.5px; }
+
+  /* TABLE */
+  .table-row { display:flex; padding:10px 8px; border-bottom:1px solid #eef0f4; align-items:center; font-size:13px; gap:12px; }
+  .table-row.header { font-weight:600; color:#5a5d6b; font-size:11px; text-transform:uppercase; letter-spacing:.5px; border-bottom:1.5px solid #e5e7eb; background:#fafbfc; }
+  .table-row .cell { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .table-row .cell.sm { flex:0.5; }
+  .table-row .cell.xs { flex:0.3; }
+  .table-row.clickable { cursor:pointer; transition:background .1s; }
+  .table-row.clickable:hover { background:#f5f6f8; }
+
+  /* BADGES / TAGS */
+  .badge { display:inline-block; padding:2px 8px; border-radius:3px; font-size:11px; font-weight:600; }
+  .badge.green { background:#d6e8e6; color:#1d6b65; }
+  .badge.yellow { background:#fef0c7; color:#997404; }
+  .badge.red { background:#fce8e6; color:#c5221f; }
+  .badge.blue { background:#e8f0fe; color:#1a3eb8; }
+  .badge.orange { background:#fff3e0; color:#e65100; }
+  .badge.gray { background:#eef0f4; color:#5a5d6b; }
+  .tag { display:inline-block; padding:3px 10px; border-radius:3px; font-size:11px; background:#f5f6f8; color:#5a5d6b; border:1px solid #e5e7eb; cursor:pointer; font-weight:500; }
+  .tag.active { background:#eef2ff; color:#1a3eb8; border-color:#1a3eb8; }
+
+  /* BUTTONS */
+  .btn { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:4px; font-size:13px; font-weight:500; cursor:pointer; border:1px solid #d8dae0; background:#fff; color:#2c2e3a; font-family:inherit; }
+  .btn:hover { border-color:#9ca0ad; }
+  .btn.primary { background:#2c2e3a; color:#fff; border-color:#2c2e3a; }
+  .btn.primary:hover { background:#1f2129; }
+  .btn.danger { background:#fff; color:#d7282f; border-color:#d7282f; }
+  .btn.danger:hover { background:#fce8e6; }
+  .btn.sm { padding:4px 10px; font-size:12px; }
+  .btn.xs { padding:2px 8px; font-size:11px; }
+  .btn-group { display:flex; gap:8px; align-items:center; }
+  .footer-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; padding-top:14px; border-top:1px solid #e5e7eb; }
+
+  /* FORMS */
+  .input { padding:7px 10px; border:1px solid #d8dae0; border-radius:4px; font-size:13px; width:100%; font-family:inherit; color:#1f2129; background:#fff; }
+  .input:focus { outline:none; border-color:#d7282f; }
+  .input:disabled { background:#f5f6f8; color:#9ca0ad; }
+  .input.sm { padding:4px 8px; font-size:12px; }
+  select.input { width:auto; cursor:pointer; }
+  .form-field { margin-bottom:14px; }
+  .form-field label { display:flex; align-items:center; gap:4px; font-size:13px; font-weight:500; margin-bottom:5px; color:#1f2129; }
+  .form-field .help { color:#9ca0ad; font-size:11px; cursor:help; border:1px solid #c5c8d0; border-radius:50%; width:13px; height:13px; display:inline-flex; align-items:center; justify-content:center; line-height:1; }
+  .form-field .hint { font-size:11px; color:#9ca0ad; margin-top:4px; line-height:1.5; }
+  .form-field .examples { font-size:11px; color:#9ca0ad; margin-top:4px; font-family:'SF Mono',Monaco,monospace; white-space:pre-wrap; background:#fafbfc; padding:6px 8px; border-radius:3px; }
+  .radio { display:flex; gap:8px; align-items:flex-start; font-size:13px; cursor:pointer; }
+  .radio input { margin-top:3px; accent-color:#2a8079; }
+  .radio-desc { font-size:12px; color:#5a5d6b; line-height:1.5; margin-top:2px; }
+  .info-callout { background:#eef2ff; border-left:3px solid #1a3eb8; padding:10px 12px; font-size:12px; color:#1a3eb8; border-radius:0 4px 4px 0; margin:12px 0; display:flex; gap:8px; align-items:flex-start; }
+  .info-callout .ic-icon { flex-shrink:0; font-weight:700; }
+  .note-callout { background:#fef9e7; border-left:3px solid #f5a623; padding:10px 12px; font-size:12px; color:#7a5e0a; border-radius:0 4px 4px 0; margin:12px 0; }
+  .search-bar { position:relative; }
+  .search-bar .input { padding-left:30px; }
+  .search-bar::before { content:''; position:absolute; left:10px; top:50%; transform:translateY(-50%); width:12px; height:12px; background:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239ca0ad' stroke-width='1.5'%3e%3ccircle cx='7' cy='7' r='5'/%3e%3cpath d='M11 11l3 3' stroke-linecap='round'/%3e%3c/svg%3e") no-repeat center; }
+
+  /* PIPELINE BUILDER */
+  .canvas { background:#fafbfc; border:1.5px dashed #d8dae0; border-radius:6px; padding:24px; min-height:200px; position:relative; margin-bottom:14px; }
+  .p-node { background:#fff; border:2px solid #d8dae0; border-radius:6px; padding:10px 14px; font-size:12px; font-weight:600; display:inline-block; margin:4px; text-align:center; min-width:130px; cursor:pointer; transition:all .15s; }
+  .p-node:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.08); }
+  .p-node.sel { border-width:2.5px; border-color:#d7282f; box-shadow:0 0 0 3px rgba(215,40,47,.12); }
+  .p-node.step-source { border-color:#2a8079; }
+  .p-node.step-process { border-color:#1a3eb8; }
+  .p-node.step-retrieval { border-color:#e67e22; }
+  .p-node.step-generate { border-color:#a371f7; }
+  .p-node.step-post { border-color:#5a5d6b; }
+
+  /* CHAT */
+  .chat-bubble { padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:10px; max-width:88%; line-height:1.55; }
+  .chat-bubble.user { background:#eef2ff; margin-left:auto; text-align:left; border:1px solid #dde3f5; }
+  .chat-bubble.ai { background:#fff; border:1px solid #e5e7eb; }
+  .chat-bubble .src { font-size:11px; color:#1a3eb8; margin-top:8px; padding-top:8px; border-top:1px solid #eef0f4; }
+
+  /* GRAPH VIZ */
+  .graph-viz { background:#fafbfc; border:1.5px dashed #d8dae0; border-radius:6px; padding:24px; min-height:180px; display:flex; align-items:center; justify-content:center; color:#9ca0ad; font-size:13px; }
+
+  /* API */
+  .api-snippet { background:#1f2129; color:#a6e3a1; font-family:'SF Mono',Monaco,monospace; font-size:11px; padding:12px 14px; border-radius:4px; line-height:1.6; overflow-x:auto; white-space:pre; margin:8px 0; }
+  .api-snippet .method { color:#7aa2f7; font-weight:700; }
+  .api-snippet .path { color:#a6e3a1; }
+  .api-snippet .comment { color:#6c7086; }
+
+  .divider { border-top:1px solid #e5e7eb; margin:14px 0; }
+  .api-hint { display:none; }
+  body.show-api .api-hint { display:inline-block; background:#fff3e0; color:#e65100; font-size:10px; padding:1px 6px; border-radius:3px; margin-left:6px; cursor:pointer; font-weight:600; vertical-align:middle; }
+  body.show-api .api-panel { display:block; }
+  .api-panel { display:none; }
+
+  .compare-side { flex:1; min-width:300px; border:1px solid #e5e7eb; border-radius:6px; padding:14px; }
+  .compare-side .side-label { font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; font-weight:600; color:#5a5d6b; }
+  .compare-side.a { border-left:3px solid #2a8079; }
+  .compare-side.b { border-left:3px solid #e67e22; }
+
+  .screen { display:none; }
+  .screen.active { display:block; }
+
+  .toast { position:fixed; bottom:20px; right:20px; background:#1f2129; color:#fff; padding:12px 20px; border-radius:6px; font-size:13px; z-index:200; opacity:0; transform:translateY(20px); transition:all .3s; }
+  .toast.show { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="hsbc-logo">
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="14" width="12" height="12" fill="#d7282f" transform="skewX(-15)"/>
+        <rect x="18" y="14" width="12" height="12" fill="#d7282f" transform="skewX(-15)"/>
+        <rect x="10" y="14" width="12" height="12" fill="#fff" transform="skewX(-15)"/>
+      </svg>
+    </div>
+    <span class="brand-text">Group AI Platform</span>
+    <span class="pill-red">Knowledge</span>
+  </div>
+  <div class="topbar-center">
+    <select class="dropdown"><option>Andrew_uat_proj</option></select>
+    <span class="divider">/</span>
+    <select class="dropdown"><option>UC1020201</option></select>
+  </div>
+  <div class="topbar-right">
+    <button class="api-toggle off" onclick="toggleAPI()" id="apiBtn">Show API</button>
+    <select class="dropdown"><option>ASP</option></select>
+    <div class="topbar-icon" title="Help">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="7.5"/><path d="M7 7a2 2 0 1 1 2.5 1.94c-.5.2-.5.5-.5 1.06M9 13h.01" stroke-linecap="round"/></svg>
+    </div>
+    <div class="topbar-icon" title="Notifications">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 13V9a5 5 0 0 1 10 0v4l1.5 1.5h-13L4 13zM7 15a1.5 1.5 0 0 0 3 0" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="avatar">AL</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="nav-item" id="nav-dashboard" onclick="showScreen('dashboard')" style="padding-left:16px;">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z"/></svg>
+    Home
+  </div>
+
+  <div class="group-label" onclick="toggleGroup(this)">
+    <span>Workspace</span><span class="chev open">▶</span>
+  </div>
+  <div class="subgroup" data-group="workspace">
+    <div class="nav-item" onclick="showScreen('model-playground')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M8 5v6"/></svg>
+      Model Playground
+    </div>
+
+    <div class="nav-item" id="nav-knowledge" onclick="showScreen('dashboard')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v10H3z M5 6h6 M5 8h6 M5 10h4"/></svg>
+      Knowledge Studio
+    </div>
+
+    <div class="nav-item" onclick="showScreen('document-studio')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h6l2 2v10H4z M6 6h4 M6 9h4 M6 12h3"/></svg>
+      Document Studio
+    </div>
+    <div class="nav-item" onclick="showScreen('agent-studio')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M3 14a5 5 0 0 1 10 0"/></svg>
+      Agent Hub
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="group-label" onclick="toggleGroup(this)">
+    <span>Knowledge Studio · Pipelines</span><span class="chev open">▶</span>
+  </div>
+  <div class="subgroup" data-group="ks-pipelines">
+    <div class="nav-item" onclick="showScreen('pipelines')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+      Pipeline List
+    </div>
+    <div class="nav-item" id="nav-playground" onclick="showScreen('playground')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4l8 4-8 4z"/></svg>
+      Playground
+    </div>
+    <div class="nav-item" id="nav-eval" onclick="showScreen('evaluation')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13V6l3-3 4 4 3-3v9z"/></svg>
+      Evaluation
+    </div>
+  </div>
+
+  <div class="group-label" onclick="toggleGroup(this)">
+    <span>Monitor</span><span class="chev open">▶</span>
+  </div>
+  <div class="subgroup" data-group="monitor">
+    <div class="nav-item" id="nav-observability" onclick="showScreen('observability')" style="padding-left:32px;">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12l3-4 3 2 4-6 2 3"/></svg>
+      Observability
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="standalone">
+    <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h10v12H3z M5 5h6 M5 7h6 M5 9h4 M5 11h6"/></svg>
+    Capability Catalogue
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- DASHBOARD -->
+<div class="screen active" id="screen-dashboard">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab active" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Overview</span>
+    </div>
+    <div class="page-title-row"><h1>Overview</h1></div>
+    <div class="subtitle">A high-level view of your knowledge ecosystem health, activity, and gaps</div>
+  </div>
+  <div class="page-body">
+    <div class="row">
+      <div class="col"><div class="metric-card"><div class="value">12</div><div class="label">Connected Sources</div></div></div>
+      <div class="col"><div class="metric-card"><div class="value">8</div><div class="label">Active Pipelines</div></div></div>
+      <div class="col"><div class="metric-card"><div class="value">45.2K</div><div class="label">Queries This Month</div></div></div>
+      <div class="col"><div class="metric-card"><div class="value">92%</div><div class="label">Satisfaction Score</div></div></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="col-2">
+        <div class="box">
+          <div class="box-label">Health Overview</div>
+          <div class="table-row header"><span class="cell">Source</span><span class="cell sm">Status</span><span class="cell sm">Last Sync</span><span class="cell sm">Next Refresh</span><span class="cell sm">Health</span></div>
+          <div class="table-row clickable" onclick="showScreen('source-detail')"><span class="cell">Engineering Wiki</span><span class="cell sm"><span class="badge green">Connected</span></span><span class="cell sm">5 min ago</span><span class="cell sm">⏱ in 14h</span><span class="cell sm">✓</span></div>
+          <div class="table-row clickable"><span class="cell">SharePoint (Marketing)</span><span class="cell sm"><span class="badge green">Connected</span></span><span class="cell sm">12 min ago</span><span class="cell sm">⏱ in 6h</span><span class="cell sm">✓</span></div>
+          <div class="table-row clickable"><span class="cell">Google Drive (Sales)</span><span class="cell sm"><span class="badge yellow">Syncing</span></span><span class="cell sm">In progress</span><span class="cell sm">⏱ in 2h</span><span class="cell sm">⏳</span></div>
+          <div class="table-row clickable"><span class="cell">Azure Blob (Archive)</span><span class="cell sm"><span class="badge red">Error</span></span><span class="cell sm">2 hours ago</span><span class="cell sm" style="color:#c5221f">⚠ paused</span><span class="cell sm">⚠ Token expired</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="box">
+          <div class="box-label">Recent Activity</div>
+          <div style="font-size:12px; color:#5a5d6b; line-height:1.9">
+            📥 Google Drive (Sales) synced 1,240 docs<br>
+            🔧 Pipeline "Sales Q&amp;A" deployed to prod<br>
+            📊 Evaluation run #47 completed — 0.89 BLEU<br>
+            ⚠ Alert: Azure Blob token expired<br>
+            👤 User "Chen" created pipeline "HR Policy Bot"
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <div class="col">
+        <div class="box">
+          <div class="box-label">Query Volume (7 days)</div>
+          <div class="graph-viz">📈 [Query volume chart — trending up 15% WoW]</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="box">
+          <div class="box-label">Top Unanswered / Low Confidence</div>
+          <div style="font-size:12px; color:#5a5d6b; line-height:1.9">
+            1. "PTO carryover policy for remote workers" — score 0.42<br>
+            2. "Q1 budget allocation by department" — score 0.38<br>
+            3. "Vendor security review process" — score 0.51
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Dashboard)</div>
+        <div class="api-snippet"><span class="comment"># Get aggregate metrics for dashboard</span>
+<span class="method">GET</span> <span class="path">/api/v1/metrics</span>
+<span class="method">GET</span> <span class="path">/api/v1/metrics/usage</span>
+<span class="method">GET</span> <span class="path">/api/v1/sources</span>  <span class="comment"># health overview</span>
+<span class="method">GET</span> <span class="path">/api/v1/traces?filter=low_confidence</span>  <span class="comment"># gap detection</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCE EXPLORER -->
+<div class="screen active" id="screen-sources">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab active" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Source Explorer</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Source Explorer <span class="api-hint">API</span></h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Manage all your connected knowledge sources</div>
+  </div>
+  <div class="page-body">
+    <div class="row" style="align-items:center; margin-bottom:14px">
+      <div class="col-2"><div class="search-bar"><input class="input" placeholder="Search by name, type, or status..."></div></div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap">
+        <span class="tag active">All</span> <span class="tag">Confluence</span> <span class="tag">SharePoint</span> <span class="tag">GDrive</span> <span class="tag">Internal KB</span>
+      </div>
+      <button class="btn primary" onclick="showScreen('add-source')">+ Add Source</button>
+    </div>
+    <div class="box">
+      <div class="table-row header"><span class="cell">Source Name</span><span class="cell">Type</span><span class="cell sm">Docs</span><span class="cell">Processing</span><span class="cell sm">Status</span><span class="cell">Last Sync</span><span class="cell">Auto Refresh</span><span class="cell xs"></span></div>
+      <div class="table-row clickable" onclick="showScreen('source-detail')">
+        <span class="cell">📍 Engineering Wiki</span><span class="cell">Confluence</span><span class="cell sm">3,421</span>
+        <span class="cell"><span class="badge blue">Vector</span> <span class="badge blue">Graph</span> <span class="badge gray">Keyword</span></span>
+        <span class="cell sm"><span class="badge green">Active</span></span><span class="cell">5 min ago</span>
+        <span class="cell">⏱ Daily 02:00 <span style="color:#9ca0ad; font-size:10px">(next: 14h)</span></span>
+        <span class="cell xs"><button class="btn xs" onclick="event.stopPropagation()">⋯</button></span>
+      </div>
+      <div class="table-row clickable">
+        <span class="cell">📍 Marketing Hub</span><span class="cell">SharePoint</span><span class="cell sm">892</span>
+        <span class="cell"><span class="badge blue">Vector</span> <span class="badge gray">Keyword</span></span>
+        <span class="cell sm"><span class="badge green">Active</span></span><span class="cell">12 min ago</span>
+        <span class="cell">⏱ Every 6h <span style="color:#9ca0ad; font-size:10px">(next: 6h)</span></span>
+        <span class="cell xs"><button class="btn xs">⋯</button></span>
+      </div>
+      <div class="table-row clickable">
+        <span class="cell">📍 Sales Playbooks</span><span class="cell">Google Drive</span><span class="cell sm">1,240</span>
+        <span class="cell"><span class="badge blue">Vector</span> <span class="badge blue">Graph</span> <span class="badge gray">Keyword</span></span>
+        <span class="cell sm"><span class="badge yellow">Syncing</span></span><span class="cell">In progress</span>
+        <span class="cell">⏱ Every hour <span style="color:#9ca0ad; font-size:10px">(next: 2h)</span></span>
+        <span class="cell xs"><button class="btn xs">⋯</button></span>
+      </div>
+      <div class="table-row clickable">
+        <span class="cell">📍 HR Policies</span><span class="cell">Internal KB</span><span class="cell sm">56</span>
+        <span class="cell"><span class="badge blue">Vector</span> <span class="badge gray">Keyword</span></span>
+        <span class="cell sm"><span class="badge green">Active</span></span><span class="cell">1 hour ago</span>
+        <span class="cell">⏱ Manual only <span class="badge gray" style="font-size:10px;">+ Schedule</span></span>
+        <span class="cell xs"><button class="btn xs">⋯</button></span>
+      </div>
+    </div>
+    <div class="info-callout"><span class="ic-icon">ⓘ</span><span><strong>Interaction:</strong> Click any row to open Source Detail. Click <strong>+ Add Source</strong> to launch the connection wizard.</span></div>
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Source Management)</div>
+        <div class="api-snippet"><span class="comment"># List all sources</span>
+<span class="method">GET</span> <span class="path">/api/v1/sources</span>
+
+<span class="comment"># Create a new source</span>
+<span class="method">POST</span> <span class="path">/api/v1/sources</span>
+Content-Type: application/json
+{
+  "name": "Engineering Wiki",
+  "type": "confluence",
+  "url": "https://eng.atlassian.net/wiki",
+  "token": "ATATT...",
+  "processing": ["vector", "graph", "keyword"]
+}
+
+<span class="comment"># Delete a source</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/sources/:id</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD SOURCE WIZARD -->
+<div class="screen" id="screen-add-source">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab active" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <a onclick="showScreen('sources')">Source Explorer</a>
+      <span class="sep">‹</span>
+      <span class="current">Add Source</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Add Source <span class="api-hint">API</span></h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Connect a new knowledge source to Knowledge Studio</div>
+  </div>
+  <div class="page-body">
+    <div class="stepper">
+      <div class="step active">1.Choose Datasources</div>
+      <div class="step">2.Provide Data</div>
+      <div class="step">3.Processing Profile</div>
+      <div class="step">4.Review &amp; Create</div>
+    </div>
+
+    <!-- STEP 1: Multi-select datasource picker -->
+    <div class="section-h">Step 1 — Select one or more datasources</div>
+    <div class="info-callout"><span class="ic-icon">ⓘ</span><span>Pick all the datasources you want to include in this dataset. You'll provide details for each in the next step.</span></div>
+
+    <div class="row" style="margin-bottom:14px">
+      <div class="col-2">
+        <div class="select-list">
+          <div class="select-toolbar">
+            <div class="left">
+              <span><strong>7</strong> available datasources</span>
+            </div>
+            <input class="search-inline" placeholder="Filter datasources…">
+          </div>
+          <label class="select-item" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked;">
+            <input type="checkbox" checked>
+            <div class="si-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v10H3z M3 6h10 M6 3v10"/></svg></div>
+            <div class="si-body"><div class="si-name">Confluence</div><div class="si-desc">Atlassian wiki &amp; knowledge base</div></div>
+            <span class="si-meta">Recommended</span>
+          </label>
+          <label class="select-item" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked;">
+            <input type="checkbox">
+            <div class="si-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10l-1 8H4zM6 5V3h4v2"/></svg></div>
+            <div class="si-body"><div class="si-name">SharePoint</div><div class="si-desc">Microsoft 365 document library</div></div>
+            <span class="si-meta">API / OAuth</span>
+          </label>
+          <label class="select-item" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked;">
+            <input type="checkbox">
+            <div class="si-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12l3-3 3 2 4-6 2 3"/></svg></div>
+            <div class="si-body"><div class="si-name">Google Cloud Storage</div><div class="si-desc">GCS buckets &amp; folders</div></div>
+            <span class="si-meta">Service account</span>
+          </label>
+          <label class="select-item" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked;">
+            <input type="checkbox">
+            <div class="si-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 7h12"/></svg></div>
+            <div class="si-body"><div class="si-name">Azure Blob Storage</div><div class="si-desc">Azure containers &amp; blobs</div></div>
+            <span class="si-meta">SAS / Connection string</span>
+          </label>
+          <label class="select-item" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked;">
+            <input type="checkbox">
+            <div class="si-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13l3-3 3 3 4-4M3 11V3h10v8"/></svg></div>
+            <div class="si-body"><div class="si-name">Amazon S3</div><div class="si-desc">AWS S3 buckets &amp; prefixes</div></div>
+            <span class="si-meta">IAM role</span>
+          </label>
+          <label class="select-item" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked;">
+            <input type="checkbox">
+            <div class="si-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h8v12H4z M4 5h8 M4 8h8 M4 11h5"/></svg></div>
+            <div class="si-body"><div class="si-name">Local Document Upload</div><div class="si-desc">PDF, DOCX, TXT, MD &amp; more from your machine</div></div>
+            <span class="si-meta">Up to 1 GB</span>
+          </label>
+          <label class="select-item" onclick="this.classList.toggle('selected');this.querySelector('input').checked=!this.querySelector('input').checked;">
+            <input type="checkbox">
+            <div class="si-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="8" cy="4" rx="6" ry="2"/><path d="M2 4v8c0 1.1 2.7 2 6 2s6-.9 6-2V4M2 8c0 1.1 2.7 2 6 2s6-.9 6-2"/></svg></div>
+            <div class="si-body"><div class="si-name">Snowflake</div><div class="si-desc">Cloud data warehouse tables &amp; views</div></div>
+            <span class="si-meta">JDBC / Key-pair auth</span>
+          </label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="box">
+          <div class="box-label">Dataset name</div>
+          <div class="form-field" style="margin-bottom:14px;">
+            <label>Name this dataset</label>
+            <input class="input" placeholder="e.g. Engineering Knowledge Base">
+            <div class="hint">A descriptive name so teammates can find it later.</div>
+          </div>
+          <div class="box-label">Selected datasources (1)</div>
+          <div class="selected-chips">
+            <span class="chip-label">You picked:</span>
+            <span class="chip">📘 Confluence <span class="chip-x">×</span></span>
+            <span class="empty" style="display:none;">No datasources selected</span>
+          </div>
+          <div class="info-callout" style="margin-top:14px;"><span class="ic-icon">ⓘ</span><span><strong>Next:</strong> for each selected datasource you'll choose how to provide the data — paste a list of links, or upload a template.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Per-source upload method (sequential, one section per source) -->
+    <div class="section-h">Step 2 — Provide data for each selected datasource</div>
+
+    <!-- Confluence block -->
+    <div class="box">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="si-icon" style="width:28px; height:28px; background:#eef2ff; border-radius:6px; display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#1a3eb8" stroke-width="1.5"><path d="M3 3h10v10H3z M3 6h10 M6 3v10"/></svg></div>
+          <strong>Confluence</strong>
+          <span class="badge green">Source 1 of 1</span>
+        </div>
+        <div class="seg-tabs">
+          <button class="active" onclick="segSwitch(this,'conf-method')">Paste links</button>
+          <button onclick="segSwitch(this,'conf-method')">Upload template</button>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Connection</label>
+        <div class="row" style="gap:10px;">
+          <div class="col"><input class="input" placeholder="Confluence URL (e.g. https://acme.atlassian.net/wiki)"></div>
+          <div class="col"><input class="input" type="password" placeholder="API Token"></div>
+        </div>
+        <div style="margin-top:6px;"><button class="btn sm">Test Connection</button><span style="font-size:11px; color:#1d6b65; margin-left:8px; font-weight:500;">✓ 12 spaces found</span></div>
+      </div>
+      <div class="form-field" id="conf-method-paste">
+        <label>Page links (one per line)</label>
+        <textarea class="input" rows="4" placeholder="https://acme.atlassian.net/wiki/spaces/ENG/pages/12345&#10;https://acme.atlassian.net/wiki/spaces/ARCH/pages/67890&#10;https://acme.atlassian.net/wiki/spaces/OPS/pages/11223"></textarea>
+        <div class="hint">Paste up to 500 Confluence page URLs. We'll fetch and index the latest version of each.</div>
+      </div>
+      <div class="form-field" id="conf-method-template" style="display:none;">
+        <label>Upload template (.xlsx)</label>
+        <div style="border:1.5px dashed #d8dae0; border-radius:6px; padding:18px; text-align:center; background:#fafbfc;">
+          <div style="font-size:24px; margin-bottom:6px;">⬆</div>
+          <div style="font-size:13px; font-weight:600; color:#1f2129;">Drop your template here</div>
+          <div style="font-size:11px; color:#5a5d6b; margin-top:4px;">.xlsx only · max 1 MB · <a href="#" style="color:#d7282f; text-decoration:none;">Download template</a></div>
+          <button class="btn sm" style="margin-top:10px;">Choose file</button>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Sync scope (optional)</label>
+        <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+          <label class="radio"><input type="radio" name="conf-scope" checked> All pages under these links</label>
+          <label class="radio"><input type="radio" name="conf-scope"> Include child pages (1 level)</label>
+          <label class="radio"><input type="radio" name="conf-scope"> Include all descendants</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- (other selected sources would render here, one block each) -->
+    <div class="info-callout"><span class="ic-icon">ⓘ</span><span>When you select more than one datasource in Step 1, additional blocks like the Confluence one above will appear here — one per source.</span></div>
+
+    <!-- STEP 3: Processing profile (single-select radio) -->
+    <div class="section-h">Step 3 — Select processing profile (what indexes to build)</div>
+    <div class="info-callout"><span class="ic-icon">ⓘ</span><span>This determines which retrieval strategies will be available for this dataset. Pick one profile — its specific inputs appear below.</span></div>
+
+    <div class="box">
+      <div class="form-field" style="display:flex; flex-direction:column; gap:10px; margin-bottom:0;">
+        <label class="radio" style="display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border:1.5px solid #d7282f; background:#fef5f6; border-radius:6px;">
+          <input type="radio" name="profile" checked style="margin-top:3px;">
+          <div>
+            <strong>Full</strong> <span class="badge green" style="margin-left:6px;">★ Recommended</span>
+            <div class="radio-desc">Builds Vector + Knowledge Graph + Keyword (BM25) indexes in parallel. Enables all retrieval strategies: hybrid, graph RAG, and agentic auto-routing.</div>
+          </div>
+        </label>
+        <label class="radio" style="display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border:1.5px solid #e5e7eb; border-radius:6px;">
+          <input type="radio" name="profile" style="margin-top:3px;">
+          <div>
+            <strong>Vector</strong>
+            <div class="radio-desc">Builds only a dense vector index (embeddings). Fastest to set up, but limited to semantic search only. Best for purely conceptual Q&amp;A.</div>
+          </div>
+        </label>
+        <label class="radio" style="display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border:1.5px solid #e5e7eb; border-radius:6px;">
+          <input type="radio" name="profile" style="margin-top:3px;">
+          <div>
+            <strong>Knowledge Graph</strong>
+            <div class="radio-desc">Builds only an entity-relationship graph. Best for multi-hop reasoning over connected concepts (e.g. "what teams depend on service X").</div>
+          </div>
+        </label>
+        <label class="radio" style="display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border:1.5px solid #e5e7eb; border-radius:6px;">
+          <input type="radio" name="profile" style="margin-top:3px;">
+          <div>
+            <strong>LLMwiki</strong>
+            <div class="radio-desc">Builds a hierarchical, LLM-summarised knowledge base. Each chunk is enriched with a topic summary. Best for very long documents that need high-level navigation.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Conditional inputs based on selected profile (placeholder) -->
+    <div class="box" id="profile-inputs">
+      <div class="box-label">Inputs for <strong>Full</strong> profile</div>
+      <div class="info-callout" style="margin-top:0;"><span class="ic-icon">ⓘ</span><span>Inputs will change based on the profile you select. Placeholders for now.</span></div>
+      <div class="form-field"><label>Vector index — Embedding model</label>
+        <select class="input"><option>text-embedding-3-large (default)</option><option>text-embedding-3-small</option><option>Cohere embed-v3</option></select>
+        <div class="hint">[PLACEHOLDER] — chunking strategy, chunk size, overlap…</div>
+      </div>
+      <div class="form-field"><label>Knowledge Graph — Entity extraction</label>
+        <select class="input"><option>LLM-based (GPT-4o-mini)</option><option>Rule-based only</option><option>Disabled</option></select>
+        <div class="hint">[PLACEHOLDER] — community detection, relationship types…</div>
+      </div>
+      <div class="form-field"><label>Keyword (BM25) — Analyzer</label>
+        <select class="input"><option>Standard</option><option>Multilingual</option><option>Custom analyzer</option></select>
+        <div class="hint">[PLACEHOLDER] — stemming, stopwords, n-grams…</div>
+      </div>
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn">Cancel</button>
+      <button class="btn">Back to previous step</button>
+      <button class="btn primary">Save and proceed</button>
+    </div>
+
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Corresponding API Call</div>
+        <div class="api-snippet"><span class="method">POST</span> <span class="path">/api/v1/datasets</span>
+Content-Type: application/json
+{
+  "name": "Engineering Knowledge Base",
+  "sources": [
+    {
+      "type": "confluence",
+      "url": "https://acme.atlassian.net/wiki",
+      "token": "ATATT...",
+      "links": [
+        "https://acme.atlassian.net/wiki/spaces/ENG/pages/12345",
+        "https://acme.atlassian.net/wiki/spaces/ARCH/pages/67890"
+      ]
+    }
+  ],
+  "processing_profile": "full",
+  "profile_inputs": {
+    "vector": { "embedding_model": "text-embedding-3-large" },
+    "graph":  { "entity_extraction": "llm" },
+    "keyword": { "analyzer": "standard" }
+  }
+}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCE DETAIL -->
+<div class="screen" id="screen-source-detail">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab active" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <a onclick="showScreen('sources')">Source Explorer</a>
+      <span class="sep">‹</span>
+      <span class="current">Engineering Wiki</span>
+    </div>
+    <div class="page-title-row">
+      <div>
+        <h1>Engineering Wiki <span class="api-hint">API</span></h1>
+        <div style="font-size:12px; color:#5a5d6b; margin-top:4px;">
+          <span class="badge green">Active</span>
+          &nbsp;Confluence · ID: src_3f8a91 · Last synced 5 min ago · Create Jun 22, 2026 by Andrew
+        </div>
+      </div>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab" onclick="switchTab(this,'det-overview')">Overview</button>
+    <button class="tab active" onclick="switchTab(this,'det-explorer')">Data Explorer</button>
+    <button class="tab" onclick="switchTab(this,'det-browse')">Browse Files</button>
+    <button class="tab" onclick="switchTab(this,'det-processing')">Processing</button>
+    <button class="tab" onclick="switchTab(this,'det-sync')">Sync Settings</button>
+    <button class="tab" onclick="switchTab(this,'det-perms')">Permissions</button>
+  </div>
+
+  <div class="page-body">
+    <!-- DATA EXPLORER (default tab) — profile-driven view -->
+    <div class="det-tab active" id="det-explorer">
+      <div class="explorer-shell">
+        <div class="explorer-header">
+          <div class="left">
+            <span class="profile-pill full"><span class="dot"></span>Profile: Full</span>
+            <div class="stats">
+              <span><strong>3,421</strong> docs</span>
+              <span>·</span>
+              <span><strong>84,230</strong> chunks</span>
+              <span>·</span>
+              <span><strong>12,450</strong> entities</span>
+              <span>·</span>
+              <span><strong>45,200</strong> relationships</span>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="btn sm">↻ Re-index</button>
+            <button class="btn sm">⤓ Export</button>
+          </div>
+        </div>
+        <div class="explorer-subtabs">
+          <button class="explorer-subtab active" data-sub="graph" onclick="explorerSubTab('graph', this)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="4" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="8" cy="12" r="2"/><path d="M5.5 5L7 10.5M10.5 5L9 10.5"/></svg>
+            Graph
+            <span style="background:#eef0f4; color:#5a5d6b; font-size:10px; font-weight:600; padding:1px 6px; border-radius:8px;">12.4K</span>
+          </button>
+          <button class="explorer-subtab" data-sub="wiki" onclick="explorerSubTab('wiki', this)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v10H3z M5 6h6 M5 8h6 M5 10h4"/></svg>
+            Wiki
+            <span style="background:#eef0f4; color:#5a5d6b; font-size:10px; font-weight:600; padding:1px 6px; border-radius:8px;">56</span>
+          </button>
+          <button class="explorer-subtab" data-sub="files" onclick="explorerSubTab('files', this)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h10v10H3z M3 6h10 M6 3v10"/></svg>
+            Files
+            <span style="background:#eef0f4; color:#5a5d6b; font-size:10px; font-weight:600; padding:1px 6px; border-radius:8px;">3.4K</span>
+          </button>
+        </div>
+
+        <!-- GRAPH sub-pane -->
+        <div class="explorer-pane active" data-pane="graph">
+          <div class="graph-pane">
+            <div class="graph-main">
+              <div class="box" style="margin:0;">
+                <div class="box-label">Knowledge Graph — scoped to this dataset</div>
+                <div class="graph-viz" style="min-height:380px;">
+                  <div style="text-align:center;">
+                    [Interactive entity graph — zoom, pan, click nodes]<br><br>
+                    <span style="display:inline-block;background:#eef2ff;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px;">● K8s Cluster</span>
+                    <span style="display:inline-block;background:#e8f5e9;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px;">● Auth Service</span>
+                    <span style="display:inline-block;background:#fff3e0;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px;">● API Gateway</span>
+                    <span style="display:inline-block;background:#f3e5f5;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px;">● Terraform</span>
+                    <span style="display:inline-block;background:#fef5f6;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px;">● PostgreSQL</span>
+                    <br>
+                    <span style="font-size:11px;color:#9ca0ad;margin-top:8px;display:block;">Nodes = Entities &nbsp;|&nbsp; Edges = Relationships &nbsp;|&nbsp; Colors = Communities</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="graph-side">
+              <div class="entity-card">
+                <div class="ent-name">Kubernetes Cluster (us-east-1)</div>
+                <div class="ent-meta">Type: Platform &nbsp;·&nbsp; Community: Infrastructure</div>
+                <div class="ent-meta">Sources: Engineering Wiki, Internal KB</div>
+                <div class="ent-meta" style="margin-top:6px;">Appears in <strong>23 documents</strong> · 4 community summaries</div>
+                <div class="rel-list">
+                  <strong style="font-size:11px; color:#5a5d6b; text-transform:uppercase; letter-spacing:.5px;">Relationships</strong>
+                  <div>→ deploys <a>Auth Service</a></div>
+                  <div>→ orchestrates <a>API Gateway</a></div>
+                  <div>→ connects to <a>PostgreSQL</a></div>
+                  <div>→ monitored by <a>Prometheus</a></div>
+                  <div>→ configured via <a>Terraform</a></div>
+                </div>
+              </div>
+              <div class="graph-controls">
+                <div class="search-bar"><input class="input sm" placeholder="Search entities..."></div>
+                <div style="margin-top:10px;">
+                  <div class="row-line"><label class="radio" style="font-size:12px;"><input type="checkbox"> Show communities only</label></div>
+                  <div class="row-line"><label class="radio" style="font-size:12px;"><input type="checkbox" checked> Highlight paths from selected</label></div>
+                  <div class="row-line">Traversal depth: <select class="input sm" style="width:auto; margin-left:4px;"><option>1 hop</option><option selected>2 hops</option><option>3 hops</option></select></div>
+                  <div class="row-line">Filter: <select class="input sm" style="width:auto; margin-left:4px;"><option>All entity types</option><option>Platform only</option><option>Service only</option></select></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WIKI sub-pane -->
+        <div class="explorer-pane" data-pane="wiki">
+          <div class="row" style="align-items:center; margin-bottom:14px;">
+            <div class="col-2"><div class="search-bar"><input class="input" placeholder="Search documents by topic or title..."></div></div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <span class="tag active">All</span>
+              <span class="tag">Auth</span>
+              <span class="tag">Infrastructure</span>
+              <span class="tag">CI/CD</span>
+              <span class="tag">Monitoring</span>
+            </div>
+          </div>
+          <div class="wiki-grid">
+            <div class="wiki-card">
+              <div class="wc-head">
+                <div class="wc-icon">📄</div>
+                <div>
+                  <div class="wc-title">Auth Service Spec</div>
+                  <div class="wc-label">Engineering Wiki · ENG</div>
+                </div>
+              </div>
+              <div class="wc-topics">
+                <span class="wc-topic">OAuth2</span>
+                <span class="wc-topic">JWT</span>
+                <span class="wc-topic">Sessions</span>
+                <span class="wc-topic">Token rotation</span>
+              </div>
+              <div class="wc-footer">
+                <span>Updated Jun 22</span>
+                <span class="wc-chunks">12 chunks</span>
+              </div>
+            </div>
+            <div class="wiki-card">
+              <div class="wc-head">
+                <div class="wc-icon">📄</div>
+                <div>
+                  <div class="wc-title">K8s Deployment Runbook</div>
+                  <div class="wc-label">Engineering Wiki · OPS</div>
+                </div>
+              </div>
+              <div class="wc-topics">
+                <span class="wc-topic">Pod scheduling</span>
+                <span class="wc-topic">Networking</span>
+                <span class="wc-topic">DNS</span>
+                <span class="wc-topic">Resource limits</span>
+              </div>
+              <div class="wc-footer">
+                <span>Updated Jun 20</span>
+                <span class="wc-chunks">8 chunks</span>
+              </div>
+            </div>
+            <div class="wiki-card">
+              <div class="wc-head">
+                <div class="wc-icon">📄</div>
+                <div>
+                  <div class="wc-title">CI/CD Pipeline Guide</div>
+                  <div class="wc-label">Engineering Wiki · OPS</div>
+                </div>
+              </div>
+              <div class="wc-topics">
+                <span class="wc-topic">Jenkins</span>
+                <span class="wc-topic">Deploys</span>
+                <span class="wc-topic">Rollback</span>
+                <span class="wc-topic">Approval gates</span>
+              </div>
+              <div class="wc-footer">
+                <span>Updated Jun 21</span>
+                <span class="wc-chunks">15 chunks</span>
+              </div>
+            </div>
+            <div class="wiki-card">
+              <div class="wc-head">
+                <div class="wc-icon">📄</div>
+                <div>
+                  <div class="wc-title">Architecture Overview</div>
+                  <div class="wc-label">Engineering Wiki · ARCH</div>
+                </div>
+              </div>
+              <div class="wc-topics">
+                <span class="wc-topic">System design</span>
+                <span class="wc-topic">Data flow</span>
+                <span class="wc-topic">Service boundaries</span>
+              </div>
+              <div class="wc-footer">
+                <span>Updated Jun 22</span>
+                <span class="wc-chunks">10 chunks</span>
+              </div>
+            </div>
+            <div class="wiki-card">
+              <div class="wc-head">
+                <div class="wc-icon">📄</div>
+                <div>
+                  <div class="wc-title">Observability Stack</div>
+                  <div class="wc-label">Engineering Wiki · OPS</div>
+                </div>
+              </div>
+              <div class="wc-topics">
+                <span class="wc-topic">Prometheus</span>
+                <span class="wc-topic">Grafana</span>
+                <span class="wc-topic">Alerts</span>
+                <span class="wc-topic">SLOs</span>
+              </div>
+              <div class="wc-footer">
+                <span>Updated Jun 19</span>
+                <span class="wc-chunks">11 chunks</span>
+              </div>
+            </div>
+            <div class="wiki-card">
+              <div class="wc-head">
+                <div class="wc-icon">📄</div>
+                <div>
+                  <div class="wc-title">Data Privacy Policy</div>
+                  <div class="wc-label">Internal KB · Compliance</div>
+                </div>
+              </div>
+              <div class="wc-topics">
+                <span class="wc-topic">PII</span>
+                <span class="wc-topic">GDPR</span>
+                <span class="wc-topic">Retention</span>
+                <span class="wc-topic">Access control</span>
+              </div>
+              <div class="wc-footer">
+                <span>Updated Jun 15</span>
+                <span class="wc-chunks">9 chunks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILES sub-pane (lightweight file tree only) -->
+        <div class="explorer-pane" data-pane="files">
+          <div class="vector-pane">
+            <div class="file-tree">
+              <div class="ft-head">📁 Engineering Wiki · 3,421 files</div>
+              <div class="ft-item ft-folder">📁 ARCH <span class="ft-meta">2 files</span></div>
+              <div class="ft-item">📄 Architecture Overview <span class="ft-meta">24 KB</span></div>
+              <div class="ft-item">📄 System Design Guide <span class="ft-meta">18 KB</span></div>
+              <div class="ft-item ft-folder">📁 ENG <span class="ft-meta">2,140 files</span></div>
+              <div class="ft-item">📄 K8s Deployment Runbook <span class="ft-meta">32 KB</span></div>
+              <div class="ft-item">📄 Auth Service Spec <span class="ft-meta">45 KB</span></div>
+              <div class="ft-item">📄 Service Catalog <span class="ft-meta">28 KB</span></div>
+              <div class="ft-item ft-folder">📁 OPS <span class="ft-meta">890 files</span></div>
+              <div class="ft-item">📄 CI/CD Pipeline Guide <span class="ft-meta">18 KB</span></div>
+              <div class="ft-item">📄 Incident Response <span class="ft-meta">22 KB</span></div>
+              <div class="ft-item ft-folder">📁 REL <span class="ft-meta">389 files</span></div>
+              <div class="ft-item">📁 / Release Notes / <span class="ft-meta">—</span></div>
+            </div>
+            <div class="chunk-pane">
+              <div class="cp-head">
+                <div class="cp-title">Select a file to inspect its chunks</div>
+                <div class="cp-meta">Files sub-pane (lightweight) — for full chunk-level browsing use the <strong>Browse Files</strong> tab.</div>
+              </div>
+              <div class="cp-body empty-state">
+                <div class="es-icon">📂</div>
+                <div class="es-title">No file selected</div>
+                <div class="es-desc">Click a file on the left to see its metadata and indexing status.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="det-tab" id="det-overview">
+      <div class="row">
+        <div class="col-2">
+          <div class="box">
+            <div class="box-label">Source Info</div>
+            <div style="font-size:13px; line-height:2">
+              <strong>Type:</strong> Confluence &nbsp; <strong>URL:</strong> eng.atlassian.net/wiki<br>
+              <strong>Spaces:</strong> ENG, ARCH, OPS, REL &nbsp; <strong>Documents:</strong> 3,421<br>
+              <strong>Chunks:</strong> 84,230 &nbsp; <strong>Entities:</strong> 12,450 &nbsp; <strong>Relationships:</strong> 45,200<br>
+              <strong>Last Full Sync:</strong> Jun 22, 2026 10:30 AM<br>
+              <strong>Incremental Sync:</strong> Every 5 minutes
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="box">
+            <div class="box-label">Processing Status</div>
+            <div style="font-size:13px; line-height:1.9">
+              <span class="badge green">✓ Vector (dense)</span> 84,230 embeddings<br>
+              <span class="badge green">✓ Vector (sparse)</span> SPLADE indexed<br>
+              <span class="badge green">✓ Graph Index</span> 12,450 nodes, 45,200 edges<br>
+              <span class="badge green">✓ Keyword (BM25)</span> Inverted index built
+            </div>
+            <div style="margin-top:10px"><span class="badge blue">Full profile</span> — All 4 retrieval strategies available</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box" style="margin-top:12px">
+        <div class="box-label">Sync History</div>
+        <div class="table-row header"><span class="cell">Time</span><span class="cell">Type</span><span class="cell sm">Added</span><span class="cell sm">Updated</span><span class="cell sm">Deleted</span><span class="cell sm">Status</span></div>
+        <div class="table-row"><span class="cell">10:30 AM today</span><span class="cell">Incremental</span><span class="cell sm">12</span><span class="cell sm">3</span><span class="cell sm">0</span><span class="cell sm"><span class="badge green">Success</span></span></div>
+        <div class="table-row"><span class="cell">10:25 AM today</span><span class="cell">Incremental</span><span class="cell sm">5</span><span class="cell sm">0</span><span class="cell sm">0</span><span class="cell sm"><span class="badge green">Success</span></span></div>
+        <div class="table-row"><span class="cell">Jun 21, 11:00 PM</span><span class="cell">Full</span><span class="cell sm">3,421</span><span class="cell sm">—</span><span class="cell sm">—</span><span class="cell sm"><span class="badge green">Success</span></span></div>
+      </div>
+
+      <div class="btn-group" style="margin-top:14px">
+        <button class="btn primary">Sync Now</button>
+        <button class="btn" onclick="document.querySelector('[onclick*=det-sync]').click()">⏱ Schedule Auto Refresh</button>
+        <button class="btn">Edit Connection</button>
+        <button class="btn">Re-index All</button>
+        <button class="btn danger">Disconnect</button>
+      </div>
+    </div>
+
+    <div class="det-tab" id="det-browse" style="display:none">
+      <div class="row" style="align-items:center; margin-bottom:12px">
+        <div class="col-2"><div class="search-bar"><input class="input sm" placeholder="Search files &amp; folders..."></div></div>
+        <span class="badge gray">3,421 documents</span>
+      </div>
+      <div class="box">
+        <div class="table-row header"><span class="cell">Name</span><span class="cell">Space</span><span class="cell sm">Size</span><span class="cell sm">Indexed</span><span class="cell">Last Modified</span></div>
+        <div class="table-row clickable"><span class="cell">📄 Architecture Overview</span><span class="cell">ARCH</span><span class="cell sm">24 KB</span><span class="cell sm"><span class="badge green">✓</span></span><span class="cell">Jun 22, 2026</span></div>
+        <div class="table-row clickable"><span class="cell">📄 CI/CD Pipeline Guide</span><span class="cell">OPS</span><span class="cell sm">18 KB</span><span class="cell sm"><span class="badge green">✓</span></span><span class="cell">Jun 21, 2026</span></div>
+        <div class="table-row clickable"><span class="cell">📄 K8s Deployment Runbook</span><span class="cell">ENG</span><span class="cell sm">32 KB</span><span class="cell sm"><span class="badge green">✓</span></span><span class="cell">Jun 20, 2026</span></div>
+        <div class="table-row clickable"><span class="cell">📄 Auth Service Spec</span><span class="cell">ENG</span><span class="cell sm">45 KB</span><span class="cell sm"><span class="badge yellow">Pending</span></span><span class="cell">Jun 22, 2026</span></div>
+        <div class="table-row clickable"><span class="cell">📁 / Release Notes /</span><span class="cell">REL</span><span class="cell sm">—</span><span class="cell sm">—</span><span class="cell">Jun 18, 2026</span></div>
+      </div>
+      <div class="note-callout"><strong>Interaction:</strong> Click a file to preview content &amp; chunks. Unindexed files are queued for next sync.</div>
+    </div>
+
+    <div class="det-tab" id="det-processing" style="display:none">
+      <div class="box">
+        <div class="box-label">Processing Profile Configuration</div>
+        <div class="row">
+          <div class="col">
+            <div class="form-field"><label>Chunking Strategy</label><select class="input"><option>Semantic (recommended)</option><option>Fixed size</option><option>Sentence</option><option>Recursive</option></select></div>
+            <div class="form-field"><label>Chunk Size (tokens)</label><input class="input sm" value="512"></div>
+            <div class="form-field"><label>Chunk Overlap (tokens)</label><input class="input sm" value="50"></div>
+          </div>
+          <div class="col">
+            <div class="form-field"><label>Embedding Model</label><select class="input"><option>text-embedding-3-large</option><option>text-embedding-3-small</option><option>Cohere embed-v3</option></select></div>
+            <div class="form-field"><label>Entity Extraction</label><select class="input"><option>LLM-based (GPT-4o-mini)</option><option>Rule-based only</option><option>Disabled</option></select></div>
+            <div class="form-field"><label>Community Detection</label><select class="input"><option>Leiden (auto-levels)</option><option>Louvain</option><option>Manual levels</option></select></div>
+          </div>
+          <div class="col">
+            <div class="form-field"><label>Keyword Analyzer</label><select class="input"><option>Standard (BM25)</option><option>Multilingual</option><option>Custom analyzer</option></select></div>
+            <div class="form-field"><label>Multimodal Handling</label><select class="input"><option>Auto-detect &amp; caption</option><option>Text-only</option><option>Include images as context</option></select></div>
+          </div>
+        </div>
+        <button class="btn primary" style="margin-top:8px">Save Changes</button>
+      </div>
+    </div>
+
+    <div class="det-tab" id="det-sync" style="display:none">
+      <div class="box">
+        <div class="box-label">Sync Configuration</div>
+        <div class="row">
+          <div class="col">
+            <div class="form-field"><label>Incremental Sync</label><select class="input"><option>Every 5 minutes</option><option>Every 15 minutes</option><option>Every hour</option><option>Manual only</option></select></div>
+          </div>
+          <div class="col">
+            <div class="form-field"><label>Full Re-sync</label><select class="input"><option>Every 24 hours</option><option>Weekly</option><option>Manual only</option></select></div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Sync Filters</label>
+          <label class="radio" style="display:block"><input type="checkbox" checked> Include page attachments</label>
+          <label class="radio" style="display:block"><input type="checkbox" checked> Include archived pages</label>
+          <label class="radio" style="display:block"><input type="checkbox"> Include comments</label>
+        </div>
+        <button class="btn primary">Save Settings</button>
+      </div>
+
+      <!-- Auto Refresh Schedule -->
+      <div class="box">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+          <div class="box-label" style="margin:0;">⏱ Auto Refresh Schedule</div>
+          <span class="badge green">Active</span>
+        </div>
+
+        <div class="info-callout" style="margin-top:0;"><span class="ic-icon">ⓘ</span><span>Set how often Knowledge Studio should re-fetch and re-index this dataset. Frequency and exact time can be combined for full control.</span></div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-field">
+              <label>Frequency</label>
+              <select class="input" id="freq-select" onchange="onFreqChange(this)">
+                <option>Manual only (no auto refresh)</option>
+                <option>Every 15 minutes</option>
+                <option>Every 30 minutes</option>
+                <option>Every hour</option>
+                <option>Every 6 hours</option>
+                <option>Every 12 hours</option>
+                <option>Every day</option>
+                <option>Every week</option>
+                <option selected>Custom cron…</option>
+              </select>
+              <div class="hint">How often the refresh should run.</div>
+            </div>
+          </div>
+          <div class="col" id="custom-cron-wrap">
+            <div class="form-field">
+              <label>Cron expression</label>
+              <input class="input" value="0 2 * * *" placeholder="e.g. 0 2 * * *">
+              <div class="hint">Standard 5-field cron (min hour dom mon dow). <a href="#" style="color:#d7282f; text-decoration:none;">Examples</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-field">
+              <label>Timezone</label>
+              <select class="input">
+                <option>(UTC) Coordinated Universal Time</option>
+                <option selected>(Asia/Hong_Kong) HKT — your local time</option>
+                <option>(Asia/Singapore) SGT</option>
+                <option>(America/New_York) EST</option>
+                <option>(Europe/London) GMT</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-field">
+              <label>Next refresh</label>
+              <input class="input" value="Tomorrow, 02:00 HKT" disabled>
+              <div class="hint" style="color:#1d6b65; font-weight:500;">✓ In 14 hours 23 minutes</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>Sync scope when refreshing</label>
+          <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+            <label class="radio"><input type="radio" name="refresh-scope" checked> Incremental only — pick up new / updated / deleted docs</label>
+            <label class="radio"><input type="radio" name="refresh-scope"> Full re-sync — rebuild all indexes from scratch</label>
+            <label class="radio"><input type="radio" name="refresh-scope"> Smart — incremental by default, full re-sync if drift detected</label>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>Failure behaviour</label>
+          <select class="input">
+            <option>Retry up to 3 times with exponential backoff</option>
+            <option>Retry once, then skip until next scheduled run</option>
+            <option>Skip on failure, send alert to admins</option>
+          </select>
+        </div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid #e5e7eb;">
+          <label class="radio" style="font-size:13px;"><input type="checkbox" checked> Notify me by email when a refresh completes or fails</label>
+          <div class="btn-group">
+            <button class="btn">Cancel</button>
+            <button class="btn primary">Save Schedule</button>
+          </div>
+        </div>
+
+        <div class="note-callout" style="margin-top:14px;"><strong>Recent refreshes:</strong> ✅ Jun 23, 02:00 HKT (12 new docs) · ✅ Jun 22, 02:00 HKT (3 updated) · ⚠️ Jun 21, 02:00 HKT — Connection timeout, retried successfully</div>
+      </div>
+    </div>
+
+    <div class="det-tab" id="det-perms" style="display:none">
+      <div class="box">
+        <div class="box-label">Access Control &amp; Permission Mirroring</div>
+        <div style="font-size:13px; line-height:1.8">
+          <div style="margin-bottom:10px"><strong>Permission Mode:</strong> <span class="badge blue">Mirror Source Permissions</span> — Confluence page-level access is respected at query time. Users only see content they can access in Confluence.</div>
+          <label class="radio" style="display:block"><input type="checkbox" checked> Enable permission-aware retrieval</label>
+          <label class="radio" style="display:block"><input type="checkbox" checked> Sync Confluence user/groups to Knowledge Studio roles</label>
+          <label class="radio" style="display:block"><input type="checkbox"> Allow override — let workspace admins grant broader access</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Source Detail)</div>
+        <div class="api-snippet"><span class="comment"># Get source details &amp; status</span>
+<span class="method">GET</span> <span class="path">/api/v1/sources/src_3f8a91</span>
+
+<span class="comment"># Trigger sync</span>
+<span class="method">POST</span> <span class="path">/api/v1/sources/src_3f8a91/sync</span>
+
+<span class="comment"># Update auto-refresh schedule</span>
+<span class="method">PUT</span> <span class="path">/api/v1/sources/src_3f8a91/schedule</span>
+Content-Type: application/json
+{
+  "frequency": "daily",
+  "cron": "0 2 * * *",
+  "timezone": "Asia/Hong_Kong",
+  "scope": "incremental",
+  "on_failure": "retry_3x",
+  "notify": true
+}
+
+<span class="comment"># Get current schedule</span>
+<span class="method">GET</span> <span class="path">/api/v1/sources/src_3f8a91/schedule</span>
+
+<span class="comment"># Update source config</span>
+<span class="method">PATCH</span> <span class="path">/api/v1/sources/src_3f8a91</span>
+Content-Type: application/json
+{ "sync_schedule": { "incremental": "15m" } }
+
+<span class="comment"># Delete &amp; remove indexes</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/sources/src_3f8a91</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAPH EXPLORER -->
+<div class="screen" id="screen-graph-explorer">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab active" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Graph Explorer</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Knowledge Graph Explorer <span class="api-hint">API</span></h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Explore entities, relationships, and communities across your knowledge</div>
+  </div>
+  <div class="page-body">
+    <div class="row">
+      <div class="col-3">
+        <div class="box">
+          <div class="box-label">Graph Visualization</div>
+          <div class="graph-viz" style="min-height:350px">
+            <div style="text-align:center">
+              [Interactive graph canvas — zoom, pan, click nodes]<br><br>
+              <span style="display:inline-block;background:#eef2ff;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px">● K8s Cluster</span>
+              <span style="display:inline-block;background:#e8f5e9;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px">● Auth Service</span>
+              <span style="display:inline-block;background:#fff3e0;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px">● API Gateway</span>
+              <span style="display:inline-block;background:#f3e5f5;padding:4px 10px;border-radius:10px;margin:4px;font-size:11px">● Terraform</span><br>
+              <span style="font-size:11px;color:#9ca0ad;margin-top:8px;display:block">Nodes = Entities &nbsp;|&nbsp; Edges = Relationships &nbsp;|&nbsp; Colors = Communities</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="box">
+          <div class="box-label">Entity Detail</div>
+          <div style="font-size:12px">
+            <strong>Kubernetes Cluster (us-east-1)</strong><br>
+            <span style="color:#9ca0ad">Type:</span> Platform &nbsp; <span style="color:#9ca0ad">Community:</span> Infrastructure<br>
+            <span style="color:#9ca0ad">Sources:</span> Engineering Wiki, Internal KB<br><br>
+            <strong>Relationships:</strong><br>
+            → deploys <span style="color:#1a3eb8">Auth Service</span><br>
+            → orchestrates <span style="color:#1a3eb8">API Gateway</span><br>
+            → connects to <span style="color:#1a3eb8">PostgreSQL</span><br>
+            → monitored by <span style="color:#1a3eb8">Prometheus</span><br>
+            → configured via <span style="color:#1a3eb8">Terraform</span><br><br>
+            <strong>Appears in:</strong> 23 documents · 4 community summaries
+          </div>
+        </div>
+        <div class="box" style="margin-top:12px">
+          <div class="search-bar"><input class="input sm" placeholder="Search entities..."></div>
+          <div style="margin-top:8px; font-size:12px; line-height:1.9">
+            <label class="radio"><input type="checkbox"> Show communities only</label>
+            <label class="radio"><input type="checkbox" checked> Highlight paths from selected</label>
+            <label class="radio">Traversal depth:
+              <select class="input xs" style="margin-left:6px; width:auto; display:inline-block;"><option>1 hop</option><option selected>2 hops</option><option>3 hops</option></select>
+            </label>
+            <label class="radio">Filter by source:
+              <select class="input xs" style="margin-left:6px; width:auto; display:inline-block;"><option>All sources</option><option>Engineering Wiki</option></select>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Graph)</div>
+        <div class="api-snippet"><span class="comment"># Search entities in graph</span>
+<span class="method">GET</span> <span class="path">/api/v1/graph/entities?q=Kubernetes&amp;source=src_3f8a91</span>
+
+<span class="comment"># Get entity with relationships</span>
+<span class="method">GET</span> <span class="path">/api/v1/graph/entities/:id</span>
+
+<span class="comment"># Traverse from entity</span>
+<span class="method">GET</span> <span class="path">/api/v1/graph/traverse?entity_id=ent_k8s01&amp;depth=2</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTERNAL KB -->
+<div class="screen" id="screen-internal-kb">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab active" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Internal KB</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Internal Knowledge Base <span class="api-hint">API</span></h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Create and manage curated knowledge directly within the platform</div>
+  </div>
+  <div class="page-body">
+    <div class="row" style="align-items:center; margin-bottom:14px">
+      <div class="col-2"><div class="search-bar"><input class="input" placeholder="Search documents..."></div></div>
+      <div class="btn-group"><button class="btn primary">+ New Document</button><button class="btn">Import</button></div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <div class="box" style="font-size:12px; line-height:1.9">
+          <div class="box-label">Categories</div>
+          <div style="font-weight:600; color:#d7282f">▾ HR Policies (12)</div>
+          <div style="font-weight:500; margin-left:12px; color:#5a5d6b">PTO &amp; Leave</div>
+          <div style="font-weight:500; margin-left:12px; color:#5a5d6b">Benefits</div>
+          <div style="font-weight:600">▸ Engineering (8)</div>
+          <div style="font-weight:600">▸ Sales (5)</div>
+          <div style="font-weight:600">▸ Legal (3)</div>
+          <div style="font-weight:600">▸ Onboarding (6)</div>
+          <div style="margin-top:12px"><button class="btn sm">+ Category</button></div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="box">
+          <div class="table-row header"><span class="cell">Title</span><span class="cell">Category</span><span class="cell sm">Status</span><span class="cell sm">Indexed</span><span class="cell sm">Updated</span><span class="cell xs"></span></div>
+          <div class="table-row clickable"><span class="cell">PTO &amp; Vacation Policy 2026</span><span class="cell">HR Policies</span><span class="cell sm"><span class="badge green">Published</span></span><span class="cell sm"><span class="badge green">✓</span></span><span class="cell sm">Jun 20</span><span class="cell xs">⋯</span></div>
+          <div class="table-row clickable"><span class="cell">Remote Work Guidelines</span><span class="cell">HR Policies</span><span class="cell sm"><span class="badge green">Published</span></span><span class="cell sm"><span class="badge green">✓</span></span><span class="cell sm">Jun 18</span><span class="cell xs">⋯</span></div>
+          <div class="table-row clickable"><span class="cell">Expense Reimbursement</span><span class="cell">HR Policies</span><span class="cell sm"><span class="badge yellow">Draft</span></span><span class="cell sm"><span class="badge gray">—</span></span><span class="cell sm">Jun 15</span><span class="cell xs">⋯</span></div>
+          <div class="table-row clickable"><span class="cell">Q2 Sales Playbook</span><span class="cell">Sales</span><span class="cell sm"><span class="badge blue">In Review</span></span><span class="cell sm"><span class="badge yellow">Partial</span></span><span class="cell sm">Jun 8</span><span class="cell xs">⋯</span></div>
+        </div>
+        <div class="note-callout"><strong>Lifecycle:</strong> Draft → Review → Published → Archived. Published docs auto-index per source processing profile. Drafts stay private.</div>
+      </div>
+    </div>
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Internal KB)</div>
+        <div class="api-snippet"><span class="comment"># Create / list documents</span>
+<span class="method">POST</span> <span class="path">/api/v1/knowledge/documents</span>
+<span class="method">GET</span>  <span class="path">/api/v1/knowledge/documents</span>
+
+<span class="comment"># Update document (publishing triggers re-index)</span>
+<span class="method">PATCH</span> <span class="path">/api/v1/knowledge/documents/:id</span>
+{ "status": "published" }
+
+<span class=\"comment\"># Delete document &amp; remove from all indexes</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/knowledge/documents/:id</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PIPELINE LIST -->
+<div class="screen active" id="screen-pipelines">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab active" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Pipelines</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Pipelines <span class="api-hint">API</span></h1>
+      <button class="btn primary" onclick="showScreen('pipeline-builder')">+ New Pipeline</button>
+    </div>
+    <div class="subtitle">Manage your retrieval &amp; generation pipelines</div>
+  </div>
+  <div class="page-body">
+    <div class="box">
+      <div class="table-row header"><span class="cell">Name</span><span class="cell">Strategy</span><span class="cell">Sources</span><span class="cell">Model</span><span class="cell sm">Deployed</span><span class="cell sm">QPS</span><span class="cell sm">Quality</span><span class="cell xs"></span></div>
+      <div class="table-row clickable" onclick="showScreen('pipeline-builder')">
+        <span class="cell">🔹 Sales Q&amp;A Bot</span>
+        <span class="cell"><span class="badge blue">Agentic</span></span>
+        <span class="cell">Sales Playbooks, Internal KB</span>
+        <span class="cell">GPT-4o</span>
+        <span class="cell sm"><span class="badge green">Live</span></span>
+        <span class="cell sm">42/min</span>
+        <span class="cell sm">91%</span>
+        <span class="cell xs">⋯</span>
+      </div>
+      <div class="table-row clickable" onclick="showScreen('pipeline-builder')">
+        <span class="cell">🔹 Engineering Assistant</span>
+        <span class="cell"><span class="badge blue">Graph RAG</span></span>
+        <span class="cell">Engineering Wiki</span>
+        <span class="cell">Claude 3.5</span>
+        <span class="cell sm"><span class="badge green">Live</span></span>
+        <span class="cell sm">28/min</span>
+        <span class="cell sm">87%</span>
+        <span class="cell xs">⋯</span>
+      </div>
+      <div class="table-row clickable" onclick="showScreen('pipeline-builder')">
+        <span class="cell">🔹 HR Policy Lookup</span>
+        <span class="cell"><span class="badge gray">Hybrid</span></span>
+        <span class="cell">HR Policies</span>
+        <span class="cell">GPT-4o-mini</span>
+        <span class="cell sm"><span class="badge green">Live</span></span>
+        <span class="cell sm">12/min</span>
+        <span class="cell sm">94%</span>
+        <span class="cell xs">⋯</span>
+      </div>
+      <div class="table-row clickable" onclick="showScreen('pipeline-builder')">
+        <span class="cell">🔹 Product FAQ</span>
+        <span class="cell"><span class="badge gray">Keyword</span> <span style="font-size:10px;color:#9ca0ad">zero-vector</span></span>
+        <span class="cell">Product Docs</span>
+        <span class="cell">GPT-4o</span>
+        <span class="cell sm"><span class="badge yellow">Draft</span></span>
+        <span class="cell sm">—</span>
+        <span class="cell sm">—</span>
+        <span class="cell xs">⋯</span>
+      </div>
+    </div>
+    <div style="margin-top:10px; font-size:11px; color:#5a5d6b">
+      <strong>Strategies:</strong> <span class="badge blue">Agentic</span> = auto-route &nbsp; <span class="badge blue">Graph RAG</span> = entity traversal &nbsp; <span class="badge gray">Hybrid</span> = vector + keyword &nbsp; <span class="badge gray">Keyword</span> = BM25 only
+    </div>
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Pipelines)</div>
+        <div class="api-snippet"><span class="method">POST</span> <span class="path">/api/v1/pipelines</span>          <span class="comment"># Create</span>
+<span class="method">GET</span>  <span class="path">/api/v1/pipelines</span>          <span class="comment"># List</span>
+<span class="method">GET</span>  <span class="path">/api/v1/pipelines/:id</span>      <span class="comment"># Get config</span>
+<span class="method">PUT</span>  <span class="path">/api/v1/pipelines/:id</span>      <span class="comment"># Update</span>
+<span class="method">POST</span> <span class="path">/api/v1/pipelines/:id/deploy</span>  <span class="comment"># Deploy</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PIPELINE BUILDER -->
+<div class="screen" id="screen-pipeline-builder">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab active" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <a onclick="showScreen('pipelines')">Pipelines</a>
+      <span class="sep">‹</span>
+      <span class="current">Sales Q&amp;A Bot</span>
+    </div>
+    <div class="page-title-row">
+      <div>
+        <h1 style="display:inline">Pipeline Builder</h1>
+        <span class="badge gray" style="margin-left:10px">v3 (current)</span>
+        <div style="font-size:12px; color:#5a5d6b; margin-top:4px;">Sales Q&amp;A Bot · Create Jun 22, 2026 by Andrew</div>
+      </div>
+      <div class="btn-group">
+        <button class="btn">Save Draft</button>
+        <button class="btn">Validate</button>
+        <button class="btn primary">Deploy</button>
+        <button class="btn">⋯</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="stepper" style="max-width:760px;">
+      <div class="step done">1.Select Data</div>
+      <div class="step done">2.Processing</div>
+      <div class="step active">3.Retrieval Strategy</div>
+      <div class="step">4.Generation &amp; Deploy</div>
+    </div>
+
+    <div class="canvas">
+      <div style="display:flex; align-items:flex-start; justify-content:center; gap:8px; flex-wrap:wrap">
+        <div class="p-node step-source sel" onclick="selectPipelineNode(this,'src')">
+          📘 <strong>Select Data</strong><br>
+          <span style="font-weight:400;font-size:10px">Sales Playbooks<br>Internal KB<br><span style="color:#9ca0ad">2 sources</span></span>
+        </div>
+        <span style="color:#9ca0ad;font-size:20px;margin-top:20px">→</span>
+        <div class="p-node step-process" onclick="selectPipelineNode(this,'process')">
+          ⚡ <strong>Processing</strong><br>
+          <span style="font-weight:400;font-size:10px">Chunk: 512 tokens<br>Overlap: 50<br>Embed: text-3-large</span>
+        </div>
+        <span style="color:#9ca0ad;font-size:20px;margin-top:20px">→</span>
+        <div class="p-node step-retrieval sel" id="pnode-retrieval" style="border-width:2.5px;border-color:#e67e22" onclick="selectPipelineNode(this,'retrieval')">
+          🎯 <strong>Retrieval Strategy</strong><br>
+          <span style="font-weight:400;font-size:10px;color:#e65100">AGENTIC (Auto-Route)<br>Hybrid + Graph + Keyword<br>Max iterations: 5</span>
+        </div>
+        <span style="color:#9ca0ad;font-size:20px;margin-top:20px">→</span>
+        <div class="p-node step-generate" onclick="selectPipelineNode(this,'generate')">
+          🧠 <strong>Generation</strong><br>
+          <span style="font-weight:400;font-size:10px">Model: GPT-4o<br>Temp: 0.3<br>Max tokens: 1024</span>
+        </div>
+        <span style="color:#9ca0ad;font-size:20px;margin-top:20px">→</span>
+        <div class="p-node step-post" onclick="selectPipelineNode(this,'post')">
+          ✅ <strong>Post-Process</strong><br>
+          <span style="font-weight:400;font-size:10px">Citations: ON<br>Guardrails: ON<br>Format: Markdown</span>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:16px; font-size:11px; color:#9ca0ad">Click any node to edit its config in the panel below. Arrows show data flow.</div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <div class="box accent" id="config-retrieval">
+          <div class="box-label red">🎯 Retrieval Strategy Configuration</div>
+          <div class="form-field">
+            <label>Strategy Mode</label>
+            <select class="input">
+              <option selected>Agentic (Auto-Route) — Recommended</option>
+              <option>Vector + Keyword (Hybrid)</option>
+              <option>Vector Only</option>
+              <option>Graph RAG</option>
+              <option>Keyword Only (Vectorless / BM25)</option>
+              <option>Structured Query (SQL / API)</option>
+            </select>
+            <div class="hint">Agentic mode auto-selects the best strategy per query. Others lock the pipeline to one strategy.</div>
+          </div>
+          <div class="divider"></div>
+          <div class="box-label">Agentic Settings</div>
+          <div style="font-size:13px">
+            <div class="form-field">
+              <label>Available Strategies</label>
+              <label class="radio" style="display:block"><input type="checkbox" checked> Hybrid (Vector + BM25)</label>
+              <label class="radio" style="display:block"><input type="checkbox" checked> Graph RAG (Entity traversal)</label>
+              <label class="radio" style="display:block"><input type="checkbox" checked> Keyword (BM25 only)</label>
+              <label class="radio" style="display:block"><input type="checkbox"> Structured Query (SQL) <span class="radio-desc">— requires DB source</span></label>
+            </div>
+            <div class="row">
+              <div class="col"><div class="form-field"><label>Max Iterations</label><input class="input sm" value="5"></div></div>
+              <div class="col"><div class="form-field"><label>Fallback Strategy</label><select class="input sm"><option>Hybrid</option><option>Keyword</option></select></div></div>
+            </div>
+            <label class="radio" style="display:block"><input type="checkbox" checked> Decompose complex queries into sub-queries</label>
+            <label class="radio" style="display:block"><input type="checkbox" checked> Verify retrieved results before generating</label>
+            <label class="radio" style="display:block"><input type="checkbox"> Return intermediate reasoning steps to client</label>
+          </div>
+        </div>
+
+        <div class="box" id="config-generate" style="display:none">
+          <div class="box-label">🧠 Generation Configuration</div>
+          <div class="row">
+            <div class="col"><div class="form-field"><label>LLM Model</label><select class="input"><option>GPT-4o</option><option>GPT-4o-mini</option><option>Claude 3.5 Sonnet</option><option>Claude 3 Haiku</option><option>Gemini 1.5 Pro</option></select></div></div>
+            <div class="col"><div class="form-field"><label>Temperature</label><input class="input sm" value="0.3"></div></div>
+            <div class="col"><div class="form-field"><label>Max Output Tokens</label><input class="input sm" value="1024"></div></div>
+          </div>
+          <div class="form-field"><label>System Prompt</label><textarea class="input" rows="3" style="font-size:12px; resize:vertical;">You are a helpful enterprise assistant. Answer questions using ONLY the provided context. If the answer is not found in context, say so. Always cite sources.</textarea></div>
+          <label class="radio" style="display:block"><input type="checkbox" checked> Enable streaming responses</label>
+        </div>
+
+        <div class="box" id="config-process" style="display:none">
+          <div class="box-label">⚡ Processing Configuration</div>
+          <div class="row">
+            <div class="col"><div class="form-field"><label>Chunk Strategy</label><select class="input"><option>Semantic</option><option>Fixed Size</option><option>Recursive</option></select></div></div>
+            <div class="col"><div class="form-field"><label>Chunk Size</label><input class="input sm" value="512"> <span style="color:#9ca0ad; font-size:11px;">tokens</span></div></div>
+            <div class="col"><div class="form-field"><label>Overlap</label><input class="input sm" value="50"> <span style="color:#9ca0ad; font-size:11px;">tokens</span></div></div>
+          </div>
+          <div class="form-field"><label>Embedding Model</label><select class="input"><option>text-embedding-3-large</option><option>text-embedding-3-small</option></select></div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="box">
+          <div class="box-label">🧪 Quick Test</div>
+          <input class="input" style="margin-bottom:8px" placeholder="Type a test query...">
+          <button class="btn primary sm">Test</button>
+          <div class="divider"></div>
+          <div style="font-size:11px; color:#5a5d6b; line-height:1.7">
+            <strong>Route:</strong> Decomposed → [Hybrid] + [Graph RAG]<br>
+            <strong>Retrieved:</strong> 15 chunks + 8 entity relationships<br>
+            <strong>Latency:</strong> 342ms &nbsp; <strong>Tokens:</strong> 2,140<br>
+            <strong>Cost est:</strong> $0.008 / query
+          </div>
+        </div>
+        <div class="box" style="margin-top:12px">
+          <div class="box-label">Version History</div>
+          <div style="font-size:12px; line-height:1.9">
+            <strong>v3</strong> <span class="badge blue">current</span> — Changed strategy to Agentic, added decomposition<br>
+            <strong>v2</strong> — Added Cohere rerank, updated system prompt<br>
+            <strong>v1</strong> — Initial hybrid RAG setup, GPT-4o<br>
+            <a href="#" style="color:#d7282f;font-size:11px; text-decoration:none;">Compare versions →</a>
+          </div>
+        </div>
+        <div class="box" style="margin-top:12px">
+          <div class="box-label">🚀 Deployment</div>
+          <div style="font-size:12px; line-height:1.7">
+            <strong>Status:</strong> <span class="badge green">Deployed</span> — v3 active<br>
+            <strong>Endpoint:</strong> <code style="background:#f5f6f8;padding:1px 5px;border-radius:3px; font-size:11px;">/api/v1/retrieve</code><br>
+            <strong>API Keys:</strong> 2 active &nbsp; <button class="btn xs">Manage</button><br>
+            <label class="radio" style="margin-top:6px"><input type="checkbox" checked> Allow MCP access</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn">Cancel</button>
+      <button class="btn">Back to previous step</button>
+      <button class="btn primary">Save and proceed</button>
+    </div>
+
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Pipeline Config API (reflects current builder state)</div>
+        <div class="api-snippet"><span class="method">PUT</span> <span class="path">/api/v1/pipelines/pipe_salesqa</span>
+Content-Type: application/json
+{
+  "name": "Sales Q&A Bot",
+  "sources": ["src_sales", "src_internalkb"],
+  "processing": { "chunk_size": 512, "overlap": 50, "embedding_model": "text-embedding-3-large" },
+  "retrieval": {
+    "strategy": "agentic",
+    "agentic": {
+      "available_strategies": ["hybrid","graph_rag","keyword"],
+      "max_iterations": 5,
+      "fallback": "hybrid",
+      "decompose": true,
+      "verify": true
+    }
+  },
+  "generation": { "model": "gpt-4o", "temperature": 0.3, "max_tokens": 1024, "stream": true },
+  "post_processing": { "citations": true, "guardrails": true, "format": "markdown" }
+}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYGROUND -->
+<div class="screen active" id="screen-playground">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab active" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Playground</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Playground <span class="api-hint">API</span></h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Test and debug pipelines before deploying</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'pg-chat')">Chat Mode</button>
+    <button class="tab" onclick="switchTab(this,'pg-compare')">Compare (A/B)</button>
+    <button class="tab" onclick="switchTab(this,'pg-api')">API Preview</button>
+  </div>
+
+  <div class="page-body">
+    <div class="pg-tab active" id="pg-chat">
+      <div class="row">
+        <div class="col-2">
+          <div class="box" style="min-height:380px">
+            <div class="box-label">Chat Test — Pipeline: Sales Q&amp;A Bot (Agentic)</div>
+            <div class="chat-bubble user">What were our Q4 sales in Europe and which marketing campaigns drove the highest growth?</div>
+            <div class="chat-bubble ai">
+              <strong>Q4 European sales totaled €12.4M</strong>, up 18% YoY. The UK led with €5.2M, followed by Germany (€3.8M) and France (€3.4M).<br><br>
+              Three campaigns drove the growth:<br>
+              1. <strong>"Winter Launch"</strong> (UK) — generated €2.1M pipeline<br>
+              2. <strong>"Enterprise Refresh"</strong> (Germany) — 320 qualified leads<br>
+              3. <strong>"Partner Acceleration"</strong> (France) — 28 new reseller deals
+              <div class="src">📘 Sources: Sales Playbooks (3) | Engineering Wiki (1) | Route: [Hybrid+Graph RAG] | Latency: 342ms</div>
+            </div>
+            <div class="chat-bubble user">Which regions had the best ROI on marketing spend?</div>
+            <div class="chat-bubble ai">
+              <strong>France had the highest ROI at 4.2x</strong>, followed by Germany (3.1x) and UK (2.8x). The "Partner Acceleration" program was exceptionally efficient.
+              <div class="src">📘 Sources: Sales Playbooks (2) | Route: [Structured Query+Hybrid] | Latency: 218ms</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:10px">
+            <input class="input" placeholder="Type your message...">
+            <button class="btn primary">Send →</button>
+          </div>
+        </div>
+        <div class="col">
+          <div class="box">
+            <div class="box-label">🔍 Trace Inspector (Live)</div>
+            <div style="font-size:11px; line-height:1.7; color:#5a5d6b">
+              <strong>Query:</strong> "Q4 sales Europe..."<br>
+              <span style="color:#1a3eb8">1. Decompose</span> → 3 sub-queries (85ms)<br>
+              <span style="color:#e67e22">2. Route: Hybrid</span> → "Q4 European sales" → 8 chunks<br>
+              <span style="color:#e67e22">3. Route: Graph RAG</span> → "marketing campaigns" → 5 entities, 3 relationships<br>
+              <span style="color:#e67e22">4. Route: Hybrid</span> → "campaign growth impact" → 4 chunks<br>
+              <span style="color:#a371f7">5. Fuse &amp; Generate</span> → GPT-4o, 2,140 tokens (95ms)<br>
+              <span style="color:#1d6b65">6. Verify</span> → all claims cited ✓ (7ms)
+            </div>
+          </div>
+          <div class="box" style="margin-top:12px">
+            <div class="box-label">Session Info</div>
+            <div style="font-size:12px; line-height:1.7">
+              <strong>Pipeline:</strong> Sales Q&amp;A Bot v3<br>
+              <strong>Total Latency:</strong> 342ms &nbsp; <strong>Tokens:</strong> 2,140<br>
+              <strong>Estimated Cost:</strong> $0.008 &nbsp; <strong>Sources Hit:</strong> 2/2
+            </div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="box">
+            <div class="box-label">Tuning Settings</div>
+            <div class="info-callout" style="margin:0 0 12px;"><span class="ic-icon">ⓘ</span><span style="font-size:11px;">Edited settings will be enabled for new query.</span></div>
+            <div class="section-h" style="margin-top:0">Dataset Information</div>
+            <div class="form-field"><label>Connected Dataset</label><input class="input" value="rewrwe" disabled></div>
+            <div class="section-h">Model Setting</div>
+            <div class="form-field"><label>Regarding Use Case</label><input class="input" value="Demo Use Case - UC1020201" disabled></div>
+            <div class="form-field"><label>Large Language Model <span class="help">?</span></label><select class="input"><option>o4-mini</option><option>GPT-4o</option><option>Claude 3.5</option></select></div>
+            <div class="section-h">RAG Configuration</div>
+            <div class="form-field"><label>Retrieve</label></div>
+            <div class="form-field"><label>Similarity Top K <span class="help">?</span></label><input class="input sm" value="6"></div>
+            <div class="form-field">
+              <label>Retrieval Setting <span class="help">?</span></label>
+              <div style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
+                <label class="radio" style="display:flex; align-items:flex-start; gap:6px;"><input type="radio" name="rset" checked style="margin-top:2px;"> <span><strong>Vector Mode</strong><br><span class="radio-desc">Generate query embeddings and search for the text chunk most similar to its vector representation.</span></span></label>
+                <label class="radio" style="display:flex; align-items:flex-start; gap:6px;"><input type="radio" name="rset" disabled style="margin-top:2px;"> <span><strong>Keyword Mode</strong><br><span class="radio-desc">Index all terms in the document. Temporally unavailable for Pgvector.</span></span></label>
+                <label class="radio" style="display:flex; align-items:flex-start; gap:6px;"><input type="radio" name="rset" disabled style="margin-top:2px;"> <span><strong>Hybrid Mode</strong><br><span class="radio-desc">Execute full-text and vector searches simultaneously. Reranking highly recommended. Temporally unavailable for Pgvector.</span></span></label>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Ranking Strategy <span class="help">?</span></label>
+              <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+                <label class="radio" style="display:flex; align-items:flex-start; gap:6px;"><input type="radio" name="rstr" checked style="margin-top:2px;"> <span><strong>No Rerank</strong><br><span class="radio-desc">No rerank method specified.</span></span></label>
+                <label class="radio" style="display:flex; align-items:flex-start; gap:6px;"><input type="radio" name="rstr" style="margin-top:2px;"> <span><strong>Similarity Rerank</strong><br><span class="radio-desc">Prioritises documents based on similarity scores.</span></span></label>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>RAG Cache <span class="help">?</span></label>
+              <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+                <label class="radio" style="display:flex; align-items:flex-start; gap:6px;"><input type="radio" name="cache" style="margin-top:2px;"> <span><strong>Enable caching</strong><br><span class="radio-desc">TTL of 5 minutes, improves speed.</span></span></label>
+                <label class="radio" style="display:flex; align-items:flex-start; gap:6px;"><input type="radio" name="cache" checked style="margin-top:2px;"> <span><strong>Disable caching</strong><br><span class="radio-desc">Disable caching for retrieval.</span></span></label>
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Metadata Filtering <span class="help">?</span> <span style="font-weight:400; color:#9ca0ad;">(Optional)</span></label>
+              <textarea class="input" rows="3" placeholder="Input metadata json"></textarea>
+              <div class="examples">Examples:
+{
+  "custom_field_1": "value_1",
+  "custom_field_2": "value_2"
+}</div>
+            </div>
+            <div class="form-field"><label>Temperature <span class="help">?</span></label><input class="input sm" value="1"></div>
+            <div class="form-field"><label>Conversation History Depth <span class="help">?</span></label><input class="input sm" value="10"></div>
+            <div class="form-field">
+              <label>Prompt Engineering <span style="font-weight:400; color:#9ca0ad;">(Optional)</span></label>
+              <div style="font-size:11px; color:#9ca0ad; margin:6px 0 2px;">Overall Description</div>
+              <textarea class="input" rows="2" placeholder="Input overall description..."></textarea>
+              <div class="examples">Examples:
+You are a knowledgeable assistant. Your answers must be grounded exclusively in the context provided below.</div>
+            </div>
+            <div class="footer-actions">
+              <button class="btn">Reset</button>
+              <button class="btn primary">Save as</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pg-tab" id="pg-compare" style="display:none">
+      <div style="margin-bottom:14px">
+        <input class="input" placeholder="Enter a query to test against both pipelines..." style="margin-bottom:8px">
+        <button class="btn primary">Run Comparison</button>
+      </div>
+      <div class="row">
+        <div class="compare-side a">
+          <div class="side-label">📘 Pipeline A: Agentic (Current)</div>
+          <div class="chat-bubble ai" style="max-width:100%">
+            <strong>Q4 European sales totaled €12.4M</strong>, up 18% YoY...<br>
+            <div class="src">BLEU: 0.91 | Latency: 342ms | Tokens: 2,140 | Cost: $0.008</div>
+          </div>
+        </div>
+        <div class="compare-side b">
+          <div class="side-label">📘 Pipeline B: Hybrid Only</div>
+          <div class="chat-bubble ai" style="max-width:100%">
+            <strong>Q4 European sales reached €12M</strong> with growth driven by several key markets...<br>
+            <div class="src">BLEU: 0.84 | Latency: 180ms | Tokens: 1,420 | Cost: $0.004</div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="col">
+          <div class="box">
+            <div class="box-label">Summary</div>
+            <div style="font-size:13px; line-height:1.9">
+              <strong>Quality:</strong> A leads by +7% BLEU<br>
+              <strong>Speed:</strong> B is 1.9x faster (180ms vs 342ms)<br>
+              <strong>Cost:</strong> B is 2x cheaper ($0.004 vs $0.008)<br>
+              <strong>Source Coverage:</strong> A hits 2 sources, B hits 1<br>
+              <span style="color:#1d6b65">→ Agentic trades speed/cost for quality &amp; breadth</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pg-tab" id="pg-api" style="display:none">
+      <div class="row">
+        <div class="col">
+          <div class="box">
+            <div class="box-label">Retrieve API — Single Shot</div>
+            <div class="api-snippet"><span class="method">POST</span> <span class="path">/api/v1/retrieve</span>
+Content-Type: application/json
+{
+  "pipeline_id": "pipe_salesqa",
+  "query": "Q4 sales in Europe?",
+  "strategy": "auto",
+  "top_k": 10,
+  "filters": {
+    "date_range": {"from":"2025-10-01","to":"2025-12-31"}
+  },
+  "rerank": true,
+  "include_citations": true
+}</div>
+            <div style="font-size:12px; color:#5a5d6b; margin-top:8px">
+              <strong>Response:</strong> JSON with <code>answer</code>, <code>citations</code>, <code>trace_id</code>, <code>latency_ms</code>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="box">
+            <div class="box-label">Chat API — Multi-turn</div>
+            <div class="api-snippet"><span class="comment"># Start conversation</span>
+<span class="method">POST</span> <span class="path">/api/v1/chat</span>
+{"pipeline_id":"pipe_salesqa","message":"Q4 sales?"}
+
+<span class="comment"># Continue (session auto-managed)</span>
+<span class="method">POST</span> <span class="path">/api/v1/chat</span>
+{"session_id":"sess_abc","message":"What about France?"}
+
+<span class="comment"># Streaming variants</span>
+<span class="method">POST</span> <span class="path">/api/v1/retrieve/stream</span>
+<span class="method">POST</span> <span class="path">/api/v1/chat/stream</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="box" style="margin-top:12px">
+        <div class="box-label">Search-Only API (retrieval without generation)</div>
+        <div class="api-snippet"><span class="method">POST</span> <span class="path">/api/v1/retrieve/search</span>
+Content-Type: application/json
+{
+  "pipeline_id": "pipe_salesqa",
+  "query": "Q4 marketing campaigns Europe",
+  "strategy": "graph_rag",
+  "top_k": 10
+}
+
+<span class="comment"># Response: returns retrieved chunks/entities without LLM generation</span></div>
+      </div>
+    </div>
+
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 All Retrieval &amp; Chat Endpoints</div>
+        <div class="api-snippet"><span class="method">POST</span> <span class="path">/api/v1/retrieve</span>         <span class="comment"># Single-shot RAG</span>
+<span class="method">POST</span> <span class="path">/api/v1/retrieve/stream</span>  <span class="comment"># Streaming RAG</span>
+<span class="method">POST</span> <span class="path">/api/v1/retrieve/search</span>  <span class="comment"># Retrieval only (no LLM)</span>
+<span class="method">POST</span> <span class="path">/api/v1/chat</span>              <span class="comment"># Multi-turn chat</span>
+<span class="method">POST</span> <span class="path">/api/v1/chat/stream</span>       <span class="comment"># Streaming chat</span>
+<span class="method">GET</span>  <span class="path">/api/v1/chat/:session</span>     <span class="comment"># Get history</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/chat/:session</span>  <span class="comment"># Clear session</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EVALUATION -->
+<div class="screen active" id="screen-evaluation">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab active" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Evaluation</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Evaluation Center <span class="api-hint">API</span></h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Measure pipeline quality with offline metrics, online evals, and A/B experiments</div>
+  </div>
+  <div class="page-body">
+    <div class="row" style="margin-bottom:14px">
+      <div class="col"><div class="metric-card"><div class="value">47</div><div class="label">Eval Runs</div></div></div>
+      <div class="col"><div class="metric-card"><div class="value">0.89</div><div class="label">Avg BLEU</div></div></div>
+      <div class="col"><div class="metric-card"><div class="value">92%</div><div class="label">Citation Accuracy</div></div></div>
+      <div class="col"><div class="metric-card"><div class="value">2</div><div class="label">Active Experiments</div></div></div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="box">
+          <div class="box-label">📝 Start New Evaluation</div>
+          <div class="form-field"><label>Pipeline</label><select class="input"><option>Sales Q&amp;A Bot (v3)</option><option>Engineering Assistant (v5)</option><option>HR Policy Lookup (v2)</option></select></div>
+          <div class="form-field">
+            <label>Dataset</label>
+            <div style="display:flex; gap:8px; align-items:center">
+              <select class="input"><option>Sales Ground Truth (240 Q&amp;A pairs)</option><option>Engineering GT (180 pairs)</option><option>HR Policy GT (90 pairs)</option></select>
+              <button class="btn sm">+ Upload New</button>
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Evaluation Type</label>
+            <label class="radio" style="display:block"><input type="radio" name="evaltype" checked> Offline (ground truth comparison)</label>
+            <label class="radio" style="display:block"><input type="radio" name="evaltype"> Online LLM-as-Judge</label>
+            <label class="radio" style="display:block"><input type="radio" name="evaltype"> User Feedback Scoring</label>
+          </div>
+          <div class="form-field">
+            <label>Metrics</label>
+            <label class="radio" style="display:inline-block; margin-right:12px"><input type="checkbox" checked> BLEU</label>
+            <label class="radio" style="display:inline-block; margin-right:12px"><input type="checkbox" checked> ROUGE-L</label>
+            <label class="radio" style="display:inline-block; margin-right:12px"><input type="checkbox" checked> Citation Precision</label>
+            <label class="radio" style="display:inline-block; margin-right:12px"><input type="checkbox"> BERTScore</label>
+            <label class="radio" style="display:inline-block; margin-right:12px"><input type="checkbox"> Faithfulness (LLM-judge)</label>
+            <label class="radio" style="display:inline-block"><input type="checkbox"> Answer Relevance</label>
+          </div>
+          <button class="btn primary">Run Evaluation</button>
+        </div>
+      </div>
+      <div class="col">
+        <div class="box accent">
+          <div class="box-label red">📊 Active Experiment: Agentic vs Hybrid</div>
+          <div style="font-size:13px; line-height:1.9">
+            <strong>Pipeline A:</strong> Sales Q&amp;A (Agentic v3) <span class="badge green">85% traffic</span><br>
+            <strong>Pipeline B:</strong> Sales Q&amp;A (Hybrid v2) <span class="badge gray">15% traffic</span><br>
+            <strong>Started:</strong> Jun 20, 2026 &nbsp; <strong>Dataset:</strong> Sales GT
+            <div class="divider"></div>
+            <table style="width:100%; font-size:12px; border-collapse:collapse">
+              <tr style="color:#5a5d6b"><th></th><th>BLEU</th><th>Latency</th><th>Tokens</th><th>Citations</th></tr>
+              <tr><td>A (Agentic)</td><td style="color:#1d6b65">0.91</td><td>342ms</td><td>2.1K</td><td>94%</td></tr>
+              <tr><td>B (Hybrid)</td><td>0.84</td><td style="color:#1d6b65">180ms</td><td style="color:#1d6b65">1.4K</td><td>89%</td></tr>
+            </table>
+            <div class="divider"></div>
+            <button class="btn primary sm">End &amp; Promote A</button>
+            <button class="btn sm" style="margin-left:6px">Adjust Traffic Split</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box" style="margin-top:14px">
+      <div class="box-label">💾 Datasets</div>
+      <div class="table-row header"><span class="cell">Name</span><span class="cell sm">Pairs</span><span class="cell">Type</span><span class="cell sm">Created</span><span class="cell xs"></span></div>
+      <div class="table-row clickable"><span class="cell">Sales Ground Truth</span><span class="cell sm">240</span><span class="cell">Q&amp;A Pairs (CSV)</span><span class="cell sm">Jun 10</span><span class="cell xs">⋯</span></div>
+      <div class="table-row clickable"><span class="cell">Engineering GT</span><span class="cell sm">180</span><span class="cell">Q&amp;A Pairs (JSONL)</span><span class="cell sm">Jun 5</span><span class="cell xs">⋯</span></div>
+      <div class="table-row clickable"><span class="cell">HR Policy GT</span><span class="cell sm">90</span><span class="cell">Q&amp;A Pairs (CSV)</span><span class="cell sm">May 28</span><span class="cell xs">⋯</span></div>
+    </div>
+
+    <div class="box" style="margin-top:14px">
+      <div class="box-label">Recent Evaluation Runs</div>
+      <div class="table-row header"><span class="cell">Run</span><span class="cell">Pipeline</span><span class="cell">Dataset</span><span class="cell sm">BLEU</span><span class="cell sm">ROUGE</span><span class="cell sm">Cite</span><span class="cell sm">Date</span></div>
+      <div class="table-row clickable"><span class="cell">#47</span><span class="cell">Sales Q&amp;A v3</span><span class="cell">Sales GT</span><span class="cell sm">0.91</span><span class="cell sm">0.88</span><span class="cell sm">94%</span><span class="cell sm">Jun 22</span></div>
+      <div class="table-row clickable"><span class="cell">#46</span><span class="cell">Sales Q&amp;A v2</span><span class="cell">Sales GT</span><span class="cell sm">0.84</span><span class="cell sm">0.81</span><span class="cell sm">89%</span><span class="cell sm">Jun 20</span></div>
+    </div>
+
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Evaluation)</div>
+        <div class="api-snippet"><span class="comment"># Upload dataset</span>
+<span class="method">POST</span> <span class="path">/api/v1/evaluations/datasets</span>
+
+<span class="comment"># Create &amp; run evaluation</span>
+<span class="method">POST</span> <span class="path">/api/v1/evaluations</span>
+{ "pipeline_id":"pipe_salesqa","dataset_id":"ds_salesgt","metrics":["bleu","rouge_l","citation_precision"] }
+
+<span class="comment"># Get results</span>
+<span class="method">GET</span>  <span class="path">/api/v1/evaluations/:id</span>
+
+<span class="comment"># A/B experiment</span>
+<span class="method">POST</span> <span class="path">/api/v1/evaluations/experiments</span>
+{ "pipeline_a":"pipe_salesqa","pipeline_b":"pipe_salesqa_v2","traffic_split":{"a":0.85,"b":0.15} }</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OBSERVABILITY -->
+<div class="screen active" id="screen-observability">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab active" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">Observability</span>
+    </div>
+    <div class="page-title-row">
+      <h1>Observability <span class="api-hint">API</span></h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Trace queries, monitor performance, and track costs</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'obs-traces')">Traces</button>
+    <button class="tab" onclick="switchTab(this,'obs-perf')">Performance</button>
+    <button class="tab" onclick="switchTab(this,'obs-cost')">Cost Analytics</button>
+    <button class="tab" onclick="switchTab(this,'obs-quality')">Quality Monitoring</button>
+  </div>
+
+  <div class="page-body">
+    <div class="obs-tab active" id="obs-traces">
+      <div class="row" style="align-items:center; margin-bottom:12px">
+        <div class="col-2"><div class="search-bar"><input class="input sm" placeholder="Search by query, user, pipeline, or trace ID..."></div></div>
+        <div style="display:flex; gap:4px"><span class="tag">1h</span> <span class="tag active">24h</span> <span class="tag">7d</span> <span class="tag">30d</span></div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="box">
+            <div class="table-row header"><span class="cell">Query</span><span class="cell">Pipeline</span><span class="cell sm">Latency</span><span class="cell sm">Tokens</span><span class="cell sm">Quality</span><span class="cell xs"></span></div>
+            <div class="table-row clickable"><span class="cell">"Q4 sales Europe campaigns"</span><span class="cell">Sales Q&amp;A</span><span class="cell sm">342ms</span><span class="cell sm">2.1K</span><span class="cell sm"><span class="badge green">0.91</span></span><span class="cell xs">→</span></div>
+            <div class="table-row clickable"><span class="cell">"Kubernetes pod scheduling"</span><span class="cell">Eng Assistant</span><span class="cell sm" style="color:#e65100">1.2s</span><span class="cell sm">3.8K</span><span class="cell sm"><span class="badge yellow">0.72</span></span><span class="cell xs">→</span></div>
+            <div class="table-row clickable"><span class="cell">"PTO carryover policy 2026"</span><span class="cell">HR Policy</span><span class="cell sm">180ms</span><span class="cell sm">0.6K</span><span class="cell sm"><span class="badge red">0.42</span></span><span class="cell xs">→</span></div>
+            <div class="table-row clickable"><span class="cell">"Vendor security checklist"</span><span class="cell">Eng Assistant</span><span class="cell sm">290ms</span><span class="cell sm">1.4K</span><span class="cell sm"><span class="badge green">0.88</span></span><span class="cell xs">→</span></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="box">
+            <div class="box-label">Trace Detail — "Q4 sales Europe campaigns"</div>
+            <div style="font-size:11px; line-height:1.7">
+              <strong>Pipeline:</strong> Sales Q&amp;A Bot (Agentic v3)<br>
+              <strong>User:</strong> jane@ / session: sess_9a2f<br>
+              <strong>Time:</strong> Jun 22, 2026 10:32:14 AM UTC<br>
+              <strong>Total:</strong> 342ms | 2,140 tokens | $0.008
+              <div class="divider"></div>
+              00ms ─ <span style="color:#1a3eb8">Decompose</span> GPT-4o (85ms)<br>
+              85ms ─ <span style="color:#e67e22">Hybrid</span> → 8 chunks (42ms)<br>
+              127ms ─ <span style="color:#e67e22">GraphRAG</span> → 5 entities (78ms)<br>
+              205ms ─ <span style="color:#e67e22">Hybrid</span> → 4 chunks (35ms)<br>
+              240ms ─ <span style="color:#a371f7">Generate</span> GPT-4o (95ms)<br>
+              335ms ─ <span style="color:#1d6b65">Verify</span> citations (7ms)<br>
+              342ms ─ ✔ Done
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="obs-tab" id="obs-perf" style="display:none">
+      <div class="row">
+        <div class="col"><div class="box"><div class="box-label">P50 Latency (7 days)</div><div class="graph-viz">📈 [Chart — P50: 245ms, P95: 890ms, P99: 2.1s]</div></div></div>
+        <div class="col"><div class="box"><div class="box-label">Request Volume</div><div class="graph-viz">📊 [Chart — 45.2K queries this month, +15% WoW]</div></div></div>
+      </div>
+    </div>
+
+    <div class="obs-tab" id="obs-cost" style="display:none">
+      <div class="row">
+        <div class="col-2"><div class="box"><div class="box-label">Cost by Pipeline (This Month)</div><div class="graph-viz">📊 [Bar chart — Sales Q&amp;A: $362 | Eng Asst: $247 | HR: $89 | Product FAQ: $0]</div></div></div>
+        <div class="col"><div class="box"><div class="box-label">Cost by Model</div><div style="font-size:12px; line-height:1.9">GPT-4o: $480 (65%)<br>GPT-4o-mini: $178 (24%)<br>Claude 3.5: $40 (5%)<br>Embeddings: $0 (included)</div></div></div>
+      </div>
+    </div>
+
+    <div class="obs-tab" id="obs-quality" style="display:none">
+      <div class="box">
+        <div class="box-label">Quality Score Trend — Sales Q&amp;A Bot</div>
+        <div class="graph-viz">📈 [Line chart — BLEU holding at 0.89-0.91 range, no drift detected]</div>
+      </div>
+      <div class="box" style="margin-top:12px">
+        <div class="box-label">🔔 Alert Policies</div>
+        <div style="font-size:12px; line-height:1.9">
+          <label class="radio"><input type="checkbox" checked> Latency &gt; 2s → <span style="color:#c5221f">PagerDuty</span></label>
+          <label class="radio"><input type="checkbox" checked> BLEU drop &gt; 10% → <span style="color:#997404">Slack #ai-alerts</span></label>
+          <label class="radio"><input type="checkbox" checked> Error rate &gt; 5% → <span style="color:#c5221f">PagerDuty</span></label>
+          <label class="radio"><input type="checkbox"> Cost spike &gt; 50% WoW → <span style="color:#997404">Email admins</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="api-panel">
+      <div class="box api">
+        <div class="box-label orange">📡 Relevant APIs (Observability)</div>
+        <div class="api-snippet"><span class="comment"># Search traces</span>
+<span class="method">GET</span> <span class="path">/api/v1/traces?pipeline=pipe_salesqa&amp;quality_lt=0.5&amp;limit=50</span>
+
+<span class="comment"># Get trace detail</span>
+<span class="method">GET</span> <span class="path">/api/v1/traces/trace_9a2f</span>
+
+<span class="comment"># Get aggregate metrics</span>
+<span class="method">GET</span> <span class="path">/api/v1/metrics?pipeline=pipe_salesqa&amp;range=7d</span>
+
+<span class="comment"># Usage &amp; cost summary</span>
+<span class="method">GET</span> <span class="path">/api/v1/metrics/usage</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- API REFERENCE -->
+<div class="screen" id="screen-api-ref">
+  <div class="page-head">
+    <div class="ks-tabs">
+      <button class="ks-tab" data-ks="overview" onclick="ksGo('overview', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7l6-5 6 5v7H2V7z M8 9v5 M5 14h6"/></svg>
+        Overview
+      </button>
+      <button class="ks-tab" data-ks="datasets" onclick="ksGo('datasets', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v3H2zM2 9h12v3H2zM2 14h12"/></svg>
+        Datasets
+        <span class="count">12</span>
+      </button>
+      <button class="ks-tab" data-ks="pipelines" onclick="ksGo('pipelines', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="4" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="8" r="1.5"/><path d="M4.5 4h2M4.5 12h2M11 8H6M9 6l2 2-2 2"/></svg>
+        Pipelines
+        <span class="count">8</span>
+      </button>
+      <button class="ks-tab active" data-ks="apis" onclick="ksGo('apis', this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7L1 8l2 1M13 7l2 1-2 1M10 4L6 12"/></svg>
+        APIs
+        <span class="count">35+</span>
+      </button>
+    </div>
+
+    <div class="breadcrumb">
+      <a onclick="showScreen('dashboard')">Knowledge Studio</a>
+      <span class="sep">‹</span>
+      <span class="current">API Reference</span>
+    </div>
+    <div class="page-title-row">
+      <h1>API Reference</h1>
+      <a class="guidance">ⓘ Guidance</a>
+    </div>
+    <div class="subtitle">Complete API surface for programmatic integration — use these to build client applications, CI/CD pipelines, and custom tooling</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'api-sources')">Sources &amp; Data</button>
+    <button class="tab" onclick="switchTab(this,'api-pipelines')">Pipelines</button>
+    <button class="tab" onclick="switchTab(this,'api-retrieval')">Retrieval &amp; Chat</button>
+    <button class="tab" onclick="switchTab(this,'api-eval')">Evaluation</button>
+    <button class="tab" onclick="switchTab(this,'api-obs')">Observability</button>
+    <button class="tab" onclick="switchTab(this,'api-admin')">Admin</button>
+  </div>
+
+  <div class="page-body">
+    <div class="api-tab active" id="api-sources">
+      <div class="box">
+        <div class="box-label">Source Management</div>
+        <div class="api-snippet"><span class="comment"># Create a data source connection</span>
+<span class="method">POST</span>   <span class="path">/api/v1/sources</span>
+<span class="comment"># List all sources</span>
+<span class="method">GET</span>    <span class="path">/api/v1/sources</span>
+<span class="comment"># Get source details &amp; status</span>
+<span class="method">GET</span>    <span class="path">/api/v1/sources/:id</span>
+<span class="comment"># Update connection config</span>
+<span class="method">PATCH</span>  <span class="path">/api/v1/sources/:id</span>
+<span class="comment"># Delete source &amp; all indexed data</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/sources/:id</span>
+
+<span class="comment"># Trigger full or incremental sync</span>
+<span class="method">POST</span>   <span class="path">/api/v1/sources/:id/sync</span>
+<span class="comment"># Get sync status &amp; history</span>
+<span class="method">GET</span>    <span class="path">/api/v1/sources/:id/sync</span>
+<span class="comment"># Cancel running sync</span>
+<span class="method">POST</span>   <span class="path">/api/v1/sources/:id/sync/cancel</span></div>
+      </div>
+      <div class="box">
+        <div class="box-label">Internal Knowledge Base</div>
+        <div class="api-snippet"><span class="method">POST</span>   <span class="path">/api/v1/knowledge/documents</span>          <span class="comment"># Create doc</span>
+<span class="method">GET</span>    <span class="path">/api/v1/knowledge/documents</span>          <span class="comment"># List docs</span>
+<span class="method">GET</span>    <span class="path">/api/v1/knowledge/documents/:id</span>      <span class="comment"># Get doc</span>
+<span class="method">PATCH</span>  <span class="path">/api/v1/knowledge/documents/:id</span>      <span class="comment"># Update (publish triggers re-index)</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/knowledge/documents/:id</span>      <span class="comment"># Delete doc &amp; remove from indexes</span>
+
+<span class="comment"># Graph explorer</span>
+<span class="method">GET</span>    <span class="path">/api/v1/graph/entities?q=...</span>         <span class="comment"># Search entities</span>
+<span class="method">GET</span>    <span class="path">/api/v1/graph/entities/:id</span>           <span class="comment"># Get entity + relationships</span>
+<span class="method">GET</span>    <span class="path">/api/v1/graph/traverse?entity_id=...&amp;depth=2</span></div>
+      </div>
+    </div>
+
+    <div class="api-tab" id="api-pipelines" style="display:none">
+      <div class="box">
+        <div class="box-label">Pipeline Lifecycle</div>
+        <div class="api-snippet"><span class="method">POST</span>   <span class="path">/api/v1/pipelines</span>                      <span class="comment"># Create</span>
+<span class="method">GET</span>    <span class="path">/api/v1/pipelines</span>                      <span class="comment"># List all</span>
+<span class="method">GET</span>    <span class="path">/api/v1/pipelines/:id</span>                  <span class="comment"># Get config</span>
+<span class="method">PUT</span>    <span class="path">/api/v1/pipelines/:id</span>                  <span class="comment"># Update config</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/pipelines/:id</span>                  <span class="comment"># Delete</span>
+<span class="method">POST</span>   <span class="path">/api/v1/pipelines/:id/deploy</span>           <span class="comment"># Deploy to production</span>
+<span class="method">POST</span>   <span class="path">/api/v1/pipelines/:id/undeploy</span>         <span class="comment"># Undeploy</span>
+<span class="method">POST</span>   <span class="path">/api/v1/pipelines/validate</span>             <span class="comment"># Validate config without saving</span>
+
+<span class="comment"># Version management</span>
+<span class="method">GET</span>    <span class="path">/api/v1/pipelines/:id/versions</span>         <span class="comment"># List versions</span>
+<span class="method">GET</span>    <span class="path">/api/v1/pipelines/:id/versions/:ver</span>    <span class="comment"># Get specific version</span>
+<span class="method">POST</span>   <span class="path">/api/v1/pipelines/:id/rollback</span>         <span class="comment"># Rollback to version</span></div>
+      </div>
+    </div>
+
+    <div class="api-tab" id="api-retrieval" style="display:none">
+      <div class="box">
+        <div class="box-label">Retrieval &amp; Generation (Core Query Surface)</div>
+        <div class="api-snippet"><span class="comment"># Single-shot retrieval + generation</span>
+<span class="method">POST</span> <span class="path">/api/v1/retrieve</span>
+Content-Type: application/json
+{
+  "pipeline_id": "pipe_abc123",
+  "query": "What were Q4 sales in Europe?",
+  "strategy": "auto",
+  "top_k": 10,
+  "filters": { "source_type": ["confluence"], "metadata": { "department": "sales" } },
+  "rerank": true,
+  "include_citations": true
+}
+
+<span class="comment"># Streaming version</span>
+<span class="method">POST</span> <span class="path">/api/v1/retrieve/stream</span>  <span class="comment"># Same body, SSE response</span>
+
+<span class="comment"># Retrieval only (no generation)</span>
+<span class="method">POST</span> <span class="path">/api/v1/retrieve/search</span>
+{ "pipeline_id":"pipe_abc","query":"...","strategy":"graph_rag","top_k":10 }</div>
+      </div>
+      <div class="box">
+        <div class="box-label">Conversational Chat</div>
+        <div class="api-snippet"><span class="method">POST</span>   <span class="path">/api/v1/chat</span>               <span class="comment"># Start or continue conversation</span>
+<span class="method">POST</span>   <span class="path">/api/v1/chat/stream</span>        <span class="comment"># Streaming chat</span>
+<span class="method">GET</span>    <span class="path">/api/v1/chat/:session_id</span>   <span class="comment"># Get conversation history</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/chat/:session_id</span>   <span class="comment"># Clear session</span></div>
+      </div>
+    </div>
+
+    <div class="api-tab" id="api-eval" style="display:none">
+      <div class="box">
+        <div class="box-label">Evaluation &amp; Datasets</div>
+        <div class="api-snippet"><span class="method">POST</span>   <span class="path">/api/v1/evaluations/datasets</span>             <span class="comment"># Upload ground truth dataset</span>
+<span class="method">GET</span>    <span class="path">/api/v1/evaluations/datasets</span>             <span class="comment"># List datasets</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/evaluations/datasets/:id</span>         <span class="comment"># Delete dataset</span>
+
+<span class="method">POST</span>   <span class="path">/api/v1/evaluations</span>                      <span class="comment"># Run evaluation</span>
+<span class="method">GET</span>    <span class="path">/api/v1/evaluations/:id</span>                  <span class="comment"># Get results</span>
+<span class="method">GET</span>    <span class="path">/api/v1/evaluations</span>                      <span class="comment"># List runs</span>
+
+<span class="method">POST</span>   <span class="path">/api/v1/evaluations/experiments</span>          <span class="comment"># Create A/B experiment</span>
+<span class="method">GET</span>    <span class="path">/api/v1/evaluations/experiments/:id</span>      <span class="comment"># Get experiment results</span></div>
+      </div>
+    </div>
+
+    <div class="api-tab" id="api-obs" style="display:none">
+      <div class="box">
+        <div class="box-label">Traces &amp; Metrics</div>
+        <div class="api-snippet"><span class="method">GET</span> <span class="path">/api/v1/traces?pipeline=...&amp;quality_lt=0.5&amp;limit=50</span>  <span class="comment"># Search</span>
+<span class="method">GET</span> <span class="path">/api/v1/traces/:id</span>                                    <span class="comment"># Detail</span>
+<span class="method">GET</span> <span class="path">/api/v1/metrics?pipeline=...&amp;range=7d</span>              <span class="comment"># Aggregated</span>
+<span class="method">GET</span> <span class="path">/api/v1/metrics/usage</span>                                 <span class="comment"># Usage &amp; cost</span></div>
+      </div>
+    </div>
+
+    <div class="api-tab" id="api-admin" style="display:none">
+      <div class="box">
+        <div class="box-label">API Keys &amp; Models</div>
+        <div class="api-snippet"><span class="method">POST</span>   <span class="path">/api/v1/api-keys</span>          <span class="comment"># Create API key</span>
+<span class="method">GET</span>    <span class="path">/api/v1/api-keys</span>          <span class="comment"># List keys</span>
+<span class="method">DELETE</span> <span class="path">/api/v1/api-keys/:id</span>      <span class="comment"># Revoke key</span>
+
+<span class="method">GET</span>    <span class="path">/api/v1/models</span>             <span class="comment"># Available LLM/embed/rerank models</span>
+<span class="method">GET</span>    <span class="path">/api/v1/usage</span>              <span class="comment"># Billing &amp; quota usage</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /container -->
+
+<div class="toast" id="toast">API mode: <span id="toastMsg">ON</span></div>
+
+<script>
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  var screen = document.getElementById('screen-' + name);
+  var nav = document.getElementById('nav-' + name);
+  if (screen) screen.classList.add('active');
+  if (nav) nav.classList.add('active');
+
+  // Knowledge Studio screens also highlight nav-knowledge
+  var ksScreens = ['dashboard','sources','add-source','source-detail','graph-explorer','internal-kb','pipelines','pipeline-builder','playground','evaluation','api-ref'];
+  if (ksScreens.indexOf(name) !== -1) {
+    var kn = document.getElementById('nav-knowledge');
+    if (kn) kn.classList.add('active');
+  }
+}
+
+
+function ksGo(name, btn) {
+  // Route to the appropriate landing screen for the section
+  if (name === 'overview') showScreen('dashboard');
+  else if (name === 'datasets') showScreen('sources');
+  else if (name === 'pipelines') showScreen('pipelines');
+  else if (name === 'apis') showScreen('api-ref');
+  // Update active state
+  if (btn && btn.parentElement) {
+    btn.parentElement.querySelectorAll('.ks-tab').forEach(function(t) { t.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+}
+
+// Auto-refresh frequency selector — show/hide the custom cron field
+function onFreqChange(select) {
+  var cronWrap = document.getElementById('custom-cron-wrap');
+  if (!cronWrap) return;
+  if (select.value.indexOf('Custom') === 0) {
+    cronWrap.style.display = 'block';
+  } else {
+    cronWrap.style.display = 'none';
+  }
+}
+
+// Segmented tab toggle (e.g. Paste links / Upload template)
+function segSwitch(btn, prefix) {
+  var group = btn.parentElement;
+  group.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  // Find sibling fieldsets by data-seg
+  var idx = Array.prototype.indexOf.call(group.querySelectorAll('button'), btn);
+  var container = group.closest('.box') || document;
+  var panels = container.querySelectorAll('[data-seg="' + prefix + '"]');
+  if (!panels.length) {
+    // Fallback: toggle by id (conf-method-paste / conf-method-template)
+    if (prefix === 'conf-method') {
+      var p = document.getElementById('conf-method-paste');
+      var t = document.getElementById('conf-method-template');
+      if (p && t) {
+        if (idx === 0) { p.style.display = 'block'; t.style.display = 'none'; }
+        else { p.style.display = 'none'; t.style.display = 'block'; }
+      }
+    }
+  }
+}
+
+function switchTab(btn, tabId) {
+  var container = btn.parentElement;
+  container.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  var parent = container.parentElement;
+  parent.querySelectorAll('.det-tab, .pg-tab, .obs-tab, .api-tab').forEach(t => t.style.display = 'none');
+  var target = document.getElementById(tabId) || parent.querySelector('#' + tabId);
+  if (!target) target = document.getElementById(tabId);
+  if (target) target.style.display = 'block';
+}
+
+// Data Explorer sub-tab switcher (Graph / Wiki / Files)
+function explorerSubTab(name, btn) {
+  var explorer = btn.closest('.explorer-shell');
+  if (!explorer) return;
+  explorer.querySelectorAll('.explorer-subtab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  explorer.querySelectorAll('.explorer-pane').forEach(function(p) { p.classList.remove('active'); });
+  var pane = explorer.querySelector('.explorer-pane[data-pane="' + name + '"]');
+  if (pane) pane.classList.add('active');
+}
+
+function selectPipelineNode(el, nodeType) {
+  document.querySelectorAll('.p-node').forEach(n => n.classList.remove('sel'));
+  el.classList.add('sel');
+  ['config-retrieval','config-generate','config-process'].forEach(function(id) {
+    var panel = document.getElementById(id);
+    if (panel) panel.style.display = 'none';
+  });
+  if (nodeType === 'retrieval') {
+    var p = document.getElementById('config-retrieval'); if (p) p.style.display = 'block';
+  } else if (nodeType === 'generate') {
+    var p = document.getElementById('config-generate'); if (p) p.style.display = 'block';
+  } else if (nodeType === 'process' || nodeType === 'src') {
+    var p = document.getElementById('config-process'); if (p) p.style.display = 'block';
+  }
+}
+
+function toggleGroup(el) {
+  var chev = el.querySelector('.chev');
+  var next = el.nextElementSibling;
+  if (chev) chev.classList.toggle('open');
+  if (next) next.style.display = (next.style.display === 'none') ? 'block' : 'none';
+}
+
+function toggleSubgroup(el) {
+  var chev = el.querySelector('.chev');
+  var next = el.nextElementSibling;
+  if (chev) chev.classList.toggle('open');
+  if (next) next.style.display = (next.style.display === 'none') ? 'block' : 'none';
+}
+
+function toggleAPI() {
+  document.body.classList.toggle('show-api');
+  var btn = document.getElementById('apiBtn');
+  var on = document.body.classList.contains('show-api');
+  btn.textContent = on ? 'Hide API' : 'Show API';
+  btn.className = 'api-toggle ' + (on ? 'on' : 'off');
+  var toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = on ? 'ON — API hints visible in all screens' : 'OFF';
+  toast.classList.add('show');
+  setTimeout(function(){ toast.classList.remove('show'); }, 2000);
+}
+
+document.body.classList.add('show-api');
+document.getElementById('apiBtn').textContent = 'Hide API';
+document.getElementById('apiBtn').className = 'api-toggle on';
+</script>
+
+</body>
+</html>
